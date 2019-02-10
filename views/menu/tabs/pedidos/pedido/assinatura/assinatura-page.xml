@@ -1,0 +1,8 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:DrawingPad="nativescript-drawingpad" navigatingTo="navigatingTo" loaded="{{ loaded }}" unloaded="{{ unloaded }}" class="page t-md" actionBarHidden="true">
+	<DockLayout stretchLastChild="true" class="m-x-15 m-t-10">
+		<StackLayout dock="bottom">
+			<Button class="bg-green white" text="SALVAR " tap="{{ salvar }}" />
+		</StackLayout>
+		 <DrawingPad:DrawingPad penColor="#000000" penWidth="3" class="border-b m-x-5" id="assinatura" />
+	</DockLayout>
+</Page>

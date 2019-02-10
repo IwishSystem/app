@@ -1,0 +1,44 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"  class="page" navigatingTo="navigatingTo" id="page_menu" loaded="{{ loaded }}" >
+  <StackLayout>
+    <Label text="opa" />
+  </StackLayout>
+	<Page.actionBar>
+		<ActionBar class="bg-red">
+			<StackLayout style="width:90%;">
+                <SearchBar text="{{ search }}" class="white" id="search_bar" />
+                <TextView id="scan" text="{{ scan }}" focus="true" loaded="{{ loadedScan }}" style="height:0" />
+            </StackLayout>
+        </ActionBar>
+    </Page.actionBar>
+    <GridLayout class="bg-gray">
+        <StackLayout row="0" col="0">
+           <TabView id="tabViewContainer" androidTabsPosition="bottom" selectedIndexChanged="{{ changed }}" tabBackgroundColor="white" selectedTabTextColor="#ee3344">
+             <TabViewItem title="Home" iconSource="{{ home }}">
+              <Frame defaultPage="views/menu/tabs/home/home-page" id="home_frame" />
+          </TabViewItem>
+          <TabViewItem title="Pedidos" iconSource="{{ pedidos }}">
+              <Frame defaultPage="{{ default_pedido_page }}" id="pedidos_frame" />
+          </TabViewItem>
+          <TabViewItem title="Sacola" iconSource="{{ sacola }}">
+              <Frame defaultPage="views/menu/tabs/sacola/sacola-page" id="sacola_frame" />
+          </TabViewItem>
+          <TabViewItem title="Loja" iconSource="{{ loja }}">
+              <Frame defaultPage="views/menu/tabs/loja/loja-page" id="loja_frame" />
+          </TabViewItem>
+          <TabViewItem title="Mais" iconSource="{{ mais }}">
+              <Frame defaultPage="views/menu/tabs/mais/mais-page" id="mais_frame" />
+          </TabViewItem>
+      </TabView>
+  </StackLayout>
+  <StackLayout row="0" col="0" >
+    <ListView items="{{ produtos_search }}" itemTap="{{ itemTapSearch }}" separatorColor="transparent" class="list-group bg-white">
+        <ListView.itemTemplate>
+            <StackLayout class="border-b p-10">
+                <Label text="{{ descricao }}" class="t-md font-weight-thin" />
+                <Label text="{{ codigo }}" class="t-sm font-weight-normal" /> 
+            </StackLayout>
+        </ListView.itemTemplate>
+    </ListView>
+</StackLayout> 
+</GridLayout>
+</Page>

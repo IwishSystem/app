@@ -1,0 +1,14 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" actionBarHidden="true" navigatingTo="navigatingTo" loaded="loaded">
+	<StackLayout class="m-15">
+		<Button class="rounded-md border black h-half m-b-15" tap="goClientes">
+			<FormattedString>
+				<Span text="NOVO PEDIDO" class="h1"></Span>
+			</FormattedString>
+		</Button>
+		<Button class="rounded-md border black h-half" tap="goHistorico">
+			<FormattedString>
+				<Span text="MEUS PEDIDOS" class="h1"></Span>
+			</FormattedString>
+		</Button>
+	</StackLayout>
+</Page>

@@ -1,0 +1,57 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md" actionBarHidden="true">
+	<DockLayout>  
+		<StackLayout dock="top" class="p-x-15 bg-gray-light">
+			<StackLayout orientation="horizontal">
+				<Label text="Pedido  " class="h1 font-weight-light"  />
+				<Label text="{{ '#'+ pedido.id_pedido }}" class="h1 font-weight-thin"  />
+			</StackLayout>
+			<Label text="{{ pedido.cliente.razao_social }}" class="t-md font-weight-normal"  />
+			<Label text="{{ pedido.cliente.cpf_cnpj }}" class="t-sm font-weight-thin m-b-5" />
+		</StackLayout>
+		<StackLayout dock="bottom" class="p-x-15 bg-gray-light">
+			<DockLayout>
+				<StackLayout orientation="horizontal" class="t-md m-t-5" dock="left">
+					<Label text="TOTAL: " class="font-weight-normal t-md" />
+					<Label text="{{ preco_total  | concurrency }}" class="font-weight-thin t-md" />					
+				</StackLayout>
+				<FlexboxLayout justifyContent="flex-end" class="t-md m-t-5" dock="right">
+					<Label text="ITENS: " class="font-weight-normal t-md"  />
+					<Label text="{{ quantidade_total }}" class="font-weight-thin t-md"  />
+				</FlexboxLayout>
+			</DockLayout>
+			<DockLayout>
+				<StackLayout orientation="horizontal" dock="left">
+					<Button text="{{ '0xe90f' | getIcon }}" class="icon bg-green white"  style="width:50; font-size: 27; padding:2; margin: 0; margin-bottom: 5;"  tap="{{ ativarCamera }}" visibility="{{ (pedido.id_status==6) ? 'visible' : 'collapsed' }}" />
+					<Button text="{{ '0xe954' | getIcon }}" class="icon bg-green white" style="width:50; font-size: 27; padding:2; margin: 0; margin-bottom: 5;" tap="{{ print }}" visibility="{{ (pedido.id_status==2) ? 'visible' : 'collapsed' }}"  />
+				</StackLayout>
+				<StackLayout>
+					<Button text="{{ text_btn }}" tap="{{ finalizarPedido }}" class="{{ bg + ' white'}}" style="margin: 0; margin-bottom: 5;" />
+				</StackLayout>
+			</DockLayout>
+		</StackLayout>
+		<ScrollView orientation="vertical" scrollBarIndicatorVisible="false">
+			<StackLayout class="m-x-15 p-b-5">
+				<StackLayout class="p-y-5 border m-b-10 m-t-15">
+					<Label text="Estoque Atual" class="text-center t-md font-weight-normal" />
+					<Label text="{{ preco_total_atual | concurrency }}" class="text-center t-md font-weight-thin" />
+				</StackLayout>
+				<StackLayout class="p-y-5 border m-b-10 ">
+					<Label text="Estoque Futuro" class="text-center t-md font-weight-normal" />
+					<Label text="{{ preco_total_futuro | concurrency }}" class="text-center t-md font-weight-thin" />
+				</StackLayout>
+				<Label text="Cond. Pagamento*" class="h2 font-weight-normal" />
+				<Button class="black text-left font-weight-thin p-l-10 t-sm" style="background-color: #fff; margin: 0; padding-left: 20;" text="{{ pedido_pagamento }}" tap="{{ gotoPagePagamento }}" />
+				<Label text="Dados do Comprador" class="h2 font-weight-normal" />
+				<Button class="black text-left font-weight-thin p-l-10 t-sm" style="background-color: #fff; margin: 0; padding-left: 20;" text="{{ comprador }}" tap="{{ gotoPageComprador }}" />
+				<Label text="Entrega" class="h2 font-weight-normal" />
+				<Button class="black text-left font-weight-thin p-l-10 t-sm" style="background-color: #fff; margin: 0; padding-left: 20;" text="{{ entrega }}" tap="{{ gotoPageEntrega }}" />
+				<Label text="Transportadora" class="h2 font-weight-normal" />
+				<Button class="black text-left font-weight-thin p-l-10 t-sm" style="background-color: #fff;margin: 0; padding-left: 20;" text="{{ transportadora }}" tap="{{ gotoPageTransportadora }}" />
+				<Label text="Observações" class="h2 font-weight-normal" />
+				<Button class="black text-left font-weight-thin p-l-10 p-r-20 t-sm" style="background-color: #fff; margin: 0; padding-left: 20;" text="{{ observacao }}" tap="{{ gotoPageObservacao }}" />
+				<Label text="Desconto do Pedido" class="h2 font-weight-normal" />
+				<Button class="black text-left font-weight-thin p-l-10 p-r-20 t-sm" style="background-color: #fff; margin: 0; padding-left: 20;" text="{{ desconto }}" tap="{{ showDescontoModal }}" />
+			</StackLayout>
+		</ScrollView>
+	</DockLayout>
+</Page>

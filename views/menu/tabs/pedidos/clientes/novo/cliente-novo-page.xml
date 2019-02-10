@@ -1,0 +1,89 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page t-md" actionBarHidden="true">
+		<DockLayout stretchLastChild="true" class="m-x-15">
+			<StackLayout dock="top">
+				<Label text="Cliente Novo" class="h1 font-weight-light" />
+			</StackLayout>
+			<StackLayout dock="bottom">
+				<Button text="Abrir Pedido" class="bg-green white" tap="{{ abrirPedido }}" />
+			</StackLayout>
+			<ScrollView orientation="vertical" scrollBarIndicatorVisible="false">
+				<StackLayout class="form">
+					<StackLayout class="input-field">
+						<Label text="CNPJ" class="label font-weight-bold m-b-5"  />
+						<TextField class="input" text="{{ cpf_cnpj }}" blur="{{ apiCnpj }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Nome Fantasia" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ nome_fantasia }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Razão Social (Obrigatório)" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ razao_social }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Incscrição Estadual" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ inscricao_estadual }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Nome de Contato" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ nome_contato }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Nome do Comprador" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ nome_comprador }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Email" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ email }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Telefone 1" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ tel_1 }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Telefone 2" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ tel_2 }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="CEP" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cep }}" blur="{{ apiCep }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Endereço" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ logradouro }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Bairro" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ bairro }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Cidade" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cidade }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="UF" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ uf }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Transportadora" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ transportadora }}" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+				</StackLayout>
+			</ScrollView>
+		</DockLayout>
+</Page>

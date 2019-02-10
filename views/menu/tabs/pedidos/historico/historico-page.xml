@@ -1,0 +1,35 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:PullRefresh="nativescript-pulltorefresh" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md" actionBarHidden="true">
+	<DockLayout stretchLastChild="true">
+		<StackLayout dock="top" class="m-x-10">
+			<Label text="Histórico" class="h1 font-weight-light" />
+		</StackLayout>
+		<StackLayout visibility="{{ (ready) ? 'visible' : 'collapsed' }}" dock="bottom" class="bg-gray-light p-y-5 p-l-10 p-r-20">
+			<DockLayout stretchLastChild="true">
+				<Label text="Total de Vendas:" dock="left" verticalAlignment="center" />
+				<Label text="{{ total | concurrency }}" dock="right" class=" text-right gray t-lg font-weight-light" />
+			</DockLayout>
+		</StackLayout>
+		<StackLayout class="m-x-10">
+			<FlexboxLayout justifyContent="center" alignItems="center" class="h-full" flexDirection="column" visibility="{{ (!ready) ? 'visible' : 'collapsed' }}">
+				<Label text="Carregando os pedido(s)" class="red" />
+				<ActivityIndicator class="activity-indicator red m-10" busy="true"></ActivityIndicator>
+			</FlexboxLayout>
+			<PullRefresh:PullToRefresh visibility="{{ (ready) ? 'visible' : 'collapsed' }}" refresh="{{ refresh }}">	
+				<ListView items="{{ pedidos }}" itemTap="{{ goPedido }}" separatorColor="transparent" class="list-group">
+					<ListView.itemTemplate>
+						<StackLayout class="border-b p-t-10 p-b-5 p-r-20">
+							<DockLayout stretchLastChild="false">
+								<Label text="{{ id_pedido }}" dock="left"  dock="right" />
+								<Label text="{{ cliente.razao_social }}" class="p-r-20" dock="left" />
+							</DockLayout>
+							<DockLayout stretchLastChild="false">
+								<Label text="{{ cliente.cpf_cnpj }}" dock="left" class="font-weight-thin gray t-sm" />
+								<Label text="{{ historicoItems(id_status) }}" dock="right"  class="{{ historicoBg(id_status) }}"/>
+							</DockLayout>					
+						</StackLayout>
+					</ListView.itemTemplate>
+				</ListView>
+			</PullRefresh:PullToRefresh>
+		</StackLayout>
+	</DockLayout>
+</Page>

@@ -1,0 +1,10 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page t-md" actionBarHidden="true">
+	<StackLayout class="m-x-15 form">
+		<Label text="Observação" class="h1 font-weight-light" />
+		<StackLayout class="input-field">
+			<Label text="Anotação do Pedido" class="label font-weight-bold m-b-5" />
+			<TextView class="input input-rounded t-md p-15" text="{{ observacao }}" height="150" style="padding: 15" />
+		</StackLayout>
+		<Button class="bg-green white" text="SALVAR" tap="{{ salvar }}"/>
+	</StackLayout>
+</Page>

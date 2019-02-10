@@ -1,0 +1,33 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="{{ loaded }}" actionBarHidden="true" class="page" navigatingTo="navigatingTo">
+	<Page.actionBar>
+		<ActionBar   />
+	</Page.actionBar>
+    <ScrollView scrollBarIndicatorVisible="false">
+    	<GridLayout rows="auto auto auto auto" class="m-15 white">
+    		<StackLayout class="bg-red m-b-15 p-15 rounded-md" row="0">
+    			<Label text="BEM VINDO KLEITON EDUARDO" class="t-md" />
+    			<Label text="Pedidos" class="card-title font-weight-bold" />
+    			<Label text="1036" class="t-lg font-weight-bold" />
+    			<Label text="Modali Design Decorações Eireli EPP" class="t-md" />
+    			<Label text="12.488.163/0001-44" class="t-md" />
+    			<Label text="EM ANDAMENTO" class="t-lg font-weight-bold text-center m-y-15" />
+    		</StackLayout>
+    		<StackLayout class="bg-green p-15 rounded-md" row="1">
+    			<Label text="Olá KLEITON EDUARDO abaixo algumas informações para você:" class="t-md" textWrap="true" />
+    			<Label text="Meta" class="card-title font-weight-bold" />
+
+    			<DockLayout stretchLastChild="false">
+    				<Label text="META" dock="left" class="t-lg" />
+    				<Label text="VENDIDO" dock="right" class="t-lg" />
+    			</DockLayout>
+    			<DockLayout stretchLastChild="false">
+    				<Label text="R$200.000" dock="left" class="t-lg" />
+    				<Label text="R$200.000" dock="right" class="t-lg" />
+    			</DockLayout>
+
+    			<Label text="Ranking" class="card-title font-weight-bold text-center" />
+    			<Label text="2ª LUGAR" class="text-center t-lg" />
+    		</StackLayout>
+    	</GridLayout>
+    </ScrollView>
+</Page>

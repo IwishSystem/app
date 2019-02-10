@@ -1,0 +1,21 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" actionBarHidden="true" class="page">
+ <StackLayout class="m-10 p-t-20"> 
+    <StackLayout width="90" height="90" class="m-r-20" verticalAlignment="center">
+        <Image  src="res://logo" stretch="aspectFit" />
+    </StackLayout>
+    <StackLayout class="form p-t-20">
+        <StackLayout class="input-field">
+            <Label text="Login" class="label font-weight-bold m-b-5" />
+            <TextField class="input t-md" text="{{ login }}" />
+            <StackLayout class="hr-light"></StackLayout>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <Label text="Senha" class="label font-weight-bold m-b-5" />
+            <TextField class="input t-md" text="{{ senha }}" secure="true" />
+            <StackLayout class="hr-light"></StackLayout>
+        </StackLayout>
+    </StackLayout>
+    <Button text="Autenticar" tap="{{ auth }}" class="bg-green white" />
+</StackLayout> 
+</Page>
+

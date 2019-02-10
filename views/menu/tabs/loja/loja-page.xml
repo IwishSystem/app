@@ -1,0 +1,21 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:PullRefresh="nativescript-pulltorefresh" actionBarHidden="true">
+	<StackLayout class="m-x-10 m-t-5">
+		<Label text="Categorias" class="h1 font-weight-thin" />	
+		<FlexboxLayout justifyContent="center" alignItems="center" class="h-full" flexDirection="column" visibility="{{ (categorias.length==0) ? 'visible' : 'collapsed' }}">
+			<Label text="Carregando as seções da loja" class="red" />
+			<ActivityIndicator class="activity-indicator red m-10" busy="true"></ActivityIndicator>
+		</FlexboxLayout>
+		<PullRefresh:PullToRefresh refresh="{{ refresh }}" visibility="{{ (categorias.length!=0) ? 'visible' : 'collapsed' }}">	
+			<ListView items="{{ categorias }}" itemTap="{{ itemTap }}" separatorColor="transparent" class="list-group">
+				<ListView.itemTemplate>
+					<StackLayout class="border-b p-y-5" orientation="horizontal">
+						<StackLayout width="80" height="80" class="m-r-20" verticalAlignment="center">
+							<Image  src="{{ imagem  | urlBefore }}" stretch="aspectFit" />
+						</StackLayout>
+						<Label text="{{ descricao }}" verticalAlignment="center" class="t-lg font-weight-normal"  />
+					</StackLayout>
+				</ListView.itemTemplate>
+			</ListView>
+		</PullRefresh:PullToRefresh>
+	</StackLayout>
+</Page>

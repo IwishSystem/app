@@ -1,0 +1,1 @@
+<Frame defaultPage="{{ default_page }}" id="main_frame" loaded="loaded" />

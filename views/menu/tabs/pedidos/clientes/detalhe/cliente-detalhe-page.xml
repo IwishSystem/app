@@ -1,0 +1,100 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md" actionBarHidden="true"> 
+	<DockLayout stretchLastChild="true" class="m-x-15">
+		<StackLayout dock="top">
+			<Label text="Cliente Detalhe" class="h1 font-weight-light" />
+		</StackLayout>
+		<StackLayout dock="bottom">
+			<Button text="Abrir pedido" class="bg-green white" tap="{{ abrirPedido }}" />
+		</StackLayout>
+		<StackLayout>
+			<FlexboxLayout justifyContent="center" alignItems="center" class="h-full" flexDirection="column" visibility="{{ !cliente ? 'visible' : 'collapsed' }}" >
+				<Label text="Carregando cliente" class="red" />
+				<ActivityIndicator class="activity-indicator red m-10" busy="true"></ActivityIndicator>
+			</FlexboxLayout>
+			<ScrollView visibility="{{ cliente ? 'visible' : 'collapsed' }}" orientation="vertical" scrollBarIndicatorVisible="false">
+				<StackLayout class="form">
+					<StackLayout class="input-field">
+						<Label text="Nome Fantasia" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.nome_fantasia }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Razão Social (Obrigatório)" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.razao_social }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="CNPJ" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.cpf_cnpj }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Status" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ (cliente.cliente_status)?cliente.cliente_status.descricao:'SEM STATUS' }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Incscrição Estadual" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.inscricao_estadual }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Nome de Contato" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.nome_contato }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Nome do Comprador" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.nome_comprador }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Email" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.email }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Telefone 1" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.tel_1 }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Telefone 2" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.tel_2 }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Endereço" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.cliente_endereco.logradouro }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Bairro" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.cliente_endereco.bairro }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Cidade" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.cliente_endereco.cidade }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="UF" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.cliente_endereco.uf }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="CEP" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.cliente_endereco.cep }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+					<StackLayout class="input-field">
+						<Label text="Transportadora" class="label font-weight-bold m-b-5" />
+						<TextField class="input" text="{{ cliente.transportadora }}" editable="false" />
+						<StackLayout class="hr-light"></StackLayout>
+					</StackLayout>
+				</StackLayout>
+			</ScrollView>
+		</StackLayout>
+	</DockLayout>
+</Page>

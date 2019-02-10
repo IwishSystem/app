@@ -1,0 +1,77 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" actionBarHidden="true">
+	<DockLayout>
+		<StackLayout visibility="{{ pedido ? 'visible' : 'collapsed' }}" orientation="horizontal" dock="bottom" class="bg-gray-light border-t">
+			<StackLayout width="25%" class="">
+				<Label text="" class="t-8" />
+				<Button text="{{ '0xea0a' | getIcon }}"  class="icon t-lg" tap="{{ adicionar }}" />
+			</StackLayout>
+			<StackLayout width="25%" class="">
+				<Label text="" class="t-8" />
+				<Button text="{{ '0xea0b' | getIcon }}"  class="icon t-lg" tap="{{ diminuir }}" />
+			</StackLayout>
+			<StackLayout width="25%" class="">
+				<Label text="Incluir" class="t-8 text-center font-weight-bold" />
+				<Button text="{{ '0xea10' | getIcon }}" class="{{ btn_color+' icon t-lg white' }}" tap="{{ atualizar }}" />
+			</StackLayout>
+			<StackLayout width="25%">
+				<Label text="Quantidade" class="t-8 text-center font-weight-bold" />
+				<Button text="{{ quantidade }}" class="borderd t-lg" style="background-color: transparent;" tap="{{ showQuantidadeModal }}" />
+			</StackLayout>
+		</StackLayout>
+		<StackLayout>
+			<FlexboxLayout justifyContent="center" alignItems="center" class="h-full" flexDirection="column" visibility="{{ !produto ? 'visible' : 'collapsed' }}" >
+				<Label text="Carregando produto" class="red" />
+				<ActivityIndicator class="activity-indicator red m-10" busy="true"></ActivityIndicator>
+			</FlexboxLayout>
+			<ScrollView visibility="{{ produto ? 'visible' : 'collapsed' }}" orientation="vertical" scrollBarIndicatorVisible="false">
+				<StackLayout>
+					<StackLayout class="border p-10 m-x-10 m-t-5">
+						<Image src="{{ $parents['Page'].url  + produto.imagem, $parents['Page'].url + produto.imagem }}" stretch="aspectFit"  />
+					</StackLayout>
+					<Label text="{{'SKU: '+produto.codigo}}" class="t-lg font-weight-normal m-x-10" />
+					<Label text="{{ produto.descricao }}" class="t-md font-weight-thin m-x-10" />
+					<DockLayout class="m-x-10">
+						<StackLayout dock="right" class="border-b border-l p-x-10 text-left">
+							<Label text="ipi" class="t-8 font-weight-bold" />
+							<Label text="{{ produto.ipi+'%' }}" class="t-lg font-weight-thin" />
+						</StackLayout>
+						<StackLayout dock="left" visibility="{{ preco==preco_desconto ? 'visible' : 'collapsed' }}" >
+							<Label text="valor" class="t-8 font-weight-bold" />
+							<Label text="{{ preco  | concurrency }}" class="t-lg font-weight-thin" />
+						</StackLayout>
+						<StackLayout dock="left" visibility="{{ preco!=preco_desconto ? 'visible' : 'collapsed' }}" >
+							<Label text="valor" class="t-8 font-weight-bold" />
+							<Label text="{{ preco  | concurrency }}" class="t-8 font-weight-bold red" style="text-decoration:line-through;" />
+							<Label text="{{ preco_desconto  | concurrency }}" class="t-lg font-weight-thin" />
+						</StackLayout>
+						<StackLayout  class="p-x-10" visibility="{{ pedido ? 'visible' : 'collapsed' }}">
+							<Label text="Desconto Item" class="t-8 font-weight-bold" />
+							<Label text="{{ desconto+'%' }}" class="t-lg font-weight-thin border h-full" tap="{{ showDescontoModal }}" />
+						</StackLayout>
+					</DockLayout>
+					<DockLayout class="bg-gray-light p-x-10 p-y-5 m-t-10">
+						<StackLayout dock="left" class="text-center">
+							<Label text="Quantidade Minima" class="t-8 font-weight-bold" />
+							<Label text="{{ produto.qtd_min }}" class="t-lg font-weight-thin" />
+						</StackLayout>
+						<StackLayout dock="right" class="text-center">
+							<Label text="Estoque Futuro" class="t-8 font-weight-bold" />
+							<Label text="{{ produto.produto_estoque.disponivel_futuro }}" class="t-lg font-weight-thin" />
+						</StackLayout>
+						<StackLayout  class="text-center">
+							<Label text="Estoque Atual" class="t-8 font-weight-bold" />
+							<Label text="{{ produto.produto_estoque.disponivel_atual }}" class="t-lg font-weight-thin" />
+						</StackLayout>
+					</DockLayout>
+					<StackLayout class="m-x-15" visibility="{{ (produtos_variacoes.length>0) ? 'visible' : 'collapsed' }}">
+						<ListPicker items="{{ produtos_variacoes }}" selectedIndex="{{ produtos_variacoes_index }}" selectedValue="{{ produto_variacao_selected }}" selectedIndexChange="{{ selectedIndexChanged }}"   />
+						<Button text="Trocar Cor" tap="{{ trocarCor }}" class="bg-green white t-md" />
+					</StackLayout>
+					<StackLayout visibility="{{ pedido ? 'visible' : 'collapsed' }}" class="m-y-10 m-x-10 form">
+						<TextView text="{{ observacao }}" class="input input-rounded t-sm" style="height:150" hint="Observação..." />
+					</StackLayout>
+				</StackLayout>
+			</ScrollView>
+		</StackLayout>
+	</DockLayout>
+</Page>

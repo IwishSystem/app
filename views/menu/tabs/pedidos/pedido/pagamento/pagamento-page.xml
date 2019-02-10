@@ -1,0 +1,13 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md" actionBarHidden="true">
+	<StackLayout class="m-x-15">
+		<Label text="Pagamento" class="h1 font-weight-light" />
+		<StackLayout visibility="{{ (pagamentos.length!=0) ? 'visible' : 'collapsed' }}">
+			<ListPicker items="{{ pagamentos }}" selectedIndex="{{ index }}"  />
+			<Button text="SALVAR" tap="{{ salvar }}" class="bg-green white" />
+		</StackLayout>
+		<FlexboxLayout justifyContent="center" alignItems="center" class="h-full" flexDirection="column" visibility="{{ (pagamentos.length==0) ? 'visible' : 'collapsed' }}" >
+			<Label text="Carregando pagamentos" class="red" />
+			<ActivityIndicator class="activity-indicator red m-10" busy="true"></ActivityIndicator>
+		</FlexboxLayout>
+	</StackLayout>
+</Page>

@@ -1,0 +1,98 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:lv="nativescript-ui-listview" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md" id="page_sacola" actionBarHidden="true">
+	<StackLayout class="p-t-5">
+		<Label class="h1 font-weight-light m-x-10" text="Sacola " />
+		<FlexboxLayout justifyContent="center" alignItems="center" class="h-full" flexDirection="column" visibility="{{ (!pedido) ? 'visible' : 'collapsed' }}">
+			<Label text="Não há pedido selecionado" class="red" />
+		</FlexboxLayout>
+		<FlexboxLayout justifyContent="center" alignItems="center" class="h-full" flexDirection="column" visibility="{{ (pedido && items.length == 0) ? 'visible' : 'collapsed' }}">
+			<StackLayout orientation="horizontal">
+				<Label text="Sacola Vazia " class="red t-lg" />
+				<Label text="{{ '0xe93a' | getIcon }}" class="red icon t-lg" />
+			</StackLayout>
+		</FlexboxLayout>
+
+		<lv:RadListView id="listView"  items="{{ items }}" visibility="{{ (pedido && items.length != 0) ? 'visible' : 'collapsed' }}"  class="list-group" separatorColor="transparent" itemTap="{{ gotoProduto }}" swipeActions="true" row="1" 
+			selectionBehavior="None" 
+			itemSwipeProgressEnded="onSwipeCellFinished"
+			itemSwipeProgressStarted="onSwipeCellStarted" 
+			itemSwipeProgressChanged="onSwipeCellProgressChanged"
+			itemSwiping="onItemSwiping"  >
+			<lv:RadListView.itemTemplate>
+				<StackLayout class="bg-white">
+					<StackLayout orientation="horizontal" class="m-x-10 m-t-5">
+						<StackLayout width="110" height="110" class="m-r-10 border" verticalAlignment="center">
+							<Image src="{{ produto.imagem  | urlBefore }}" stretch="aspectFit" />
+						</StackLayout>
+						<DockLayout stretchLastChild="false">
+							<StackLayout dock="top">
+								<Label text="{{ produto.codigo }}" class="t-10 font-weight-thin" /> 
+								<Label text="{{ produto.descricao }}"  class="t-12 font-weight-normal" />
+								<Label text="{{ 'Estoque: Atual('+estoque_atual_qtd+') Futuro('+ estoque_futuro_qtd +')' }}" class="t-8 font-weight-thin" />
+							</StackLayout>
+							<StackLayout dock="bottom">
+								<Label text="Quantidade" class="t-12 font-weight-normal" />
+								<DockLayout orientation="horizontal" class="w-full" stretchLastChild="false">
+									<Label text="{{ quantidade }}" dock="left" class="t-md border p-x-25 p-y-5 text-center border-radius-sm font-weight-thin" />
+									<StackLayout orientation="horizontal" dock="right" class="text-right" >
+										<Label text="{{ preco | concurrency }}"  class="t-10 p-y-5 p-r-5 text-right"  style="text-decoration:line-through;" visibility="{{ (desconto!=0) ? 'visible' : 'collapsed' }}" />
+										<Label text="{{ preco*(100-desconto)/100  | concurrency }}" class="red t-md p-y-5 text-right" />
+									</StackLayout>
+								</DockLayout>
+							</StackLayout>
+						</DockLayout>
+					</StackLayout>
+					<DockLayout class="bg-gray-light red p-x-10 p-y-5 m-t-5">
+						<Label text="SubTotal" dock="left" class="t-12" />
+						<Label text="{{ (quantidade*(preco*(100-desconto)/100 )) | concurrency }}" dock="right" class="t-12 text-right" />
+					</DockLayout>
+				</StackLayout>
+			</lv:RadListView.itemTemplate>
+			<lv:RadListView.itemSwipeTemplate>
+				<!--<GridLayout columns="auto, *, auto" backgroundColor="White">
+					<StackLayout id="delete-view" col="0" class="bg-red p-x-20" tap="onLeftSwipeClick" orientation="horizontal">
+						<Label text="{{ '0xe9ac' | getIcon }}" class="icon white t-30" verticalAlignment="center" horizontalAlignment="center" />
+					</StackLayout>
+				</GridLayout>-->
+				<GridLayout columns="auto, *, auto" backgroundColor="White">
+					<StackLayout id="mark-view" col="0" class="bg-red p-x-20" tap="{{ deleteItem }}" orientation="horizontal">
+						<Label text="{{ '0xe9ac' | getIcon }}" class="icon white t-30 p-x-20" style="text-size: 20" verticalAlignment="center" horizontalAlignment="center"/>
+					</StackLayout>
+					<StackLayout id="delete-view" col="2"  tap="onRightSwipeClick"   orientation="horizontal" />
+				</GridLayout>
+			</lv:RadListView.itemSwipeTemplate>
+		</lv:RadListView>
+
+
+		<!--<ListView visibility="{{ (pedido && items.length != 0) ? 'visible' : 'collapsed' }}"  class="list-group" items="{{ items }}" separatorColor="transparent" itemTap="{{ gotoProduto }}" >
+			<ListView.itemTemplate>
+				<StackLayout>
+					<StackLayout orientation="horizontal" class="m-x-10 m-t-5">
+						<StackLayout width="110" height="110" class="m-r-10 border" verticalAlignment="center">
+							<Image src="{{ $parents['Page'].url  + produto.imagem,  $parents['Page'].url  + produto.imagem }}" stretch="aspectFit" />
+						</StackLayout>
+						<DockLayout stretchLastChild="false">
+							<StackLayout dock="top">
+								<Label text="{{ produto.codigo }}" class="t-10 font-weight-thin" /> 
+								<Label text="{{ produto.descricao }}"  class="t-12 font-weight-normal" />
+								<Label text="{{ 'Estoque: Atual('+estoque_atual_qtd+') Futuro('+ estoque_futuro_qtd +')' }}" class="t-8 font-weight-thin" />
+							</StackLayout>
+							<StackLayout dock="bottom">
+								<Label text="Quantidade" class="t-12 font-weight-normal" />
+								<DockLayout orientation="horizontal" class="w-full">
+									<Label text="{{ quantidade }}" dock="left" class="t-md border p-x-30 p-y-5 text-center border-radius-sm font-weight-thin" />
+									<Label text="{{ preco  | concurrency }}" dock="right" class="red t-md p-y-5 text-right" />
+								</DockLayout>
+							</StackLayout>
+						</DockLayout>
+					</StackLayout>
+					<DockLayout class="bg-gray-light red p-x-10 p-y-5 m-t-5">
+						<Label text="SubTotal" dock="left" class="t-12" />
+						<Label text="{{ quantidade*preco | concurrency }}" dock="right" class="t-12 text-right" />
+					</DockLayout>
+				</StackLayout>
+			</ListView.itemTemplate>
+		</ListView>-->
+
+
+	</StackLayout>
+</Page>

@@ -1,0 +1,21 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page t-md" actionBarHidden="true">
+	<StackLayout class="m-x-15 form">
+		<Label text="Comprador " class="h1 font-weight-light" />
+		<StackLayout class="input-field">
+			<Label text="Nome" class="label font-weight-bold m-b-5" />
+			<TextField class="input t-md" text="{{ nome }}" />
+			<StackLayout class="hr-light"></StackLayout>
+		</StackLayout>
+		<StackLayout class="input-field">
+			<Label text="Email" class="label font-weight-bold m-b-5" />
+			<TextField class="input t-md" text="{{ email }}" />
+			<StackLayout class="hr-light"></StackLayout>
+		</StackLayout>
+		<StackLayout class="input-field">
+			<Label text="Telefone" class="label font-weight-bold m-b-5" />
+			<TextField class="input t-md" text="{{ telefone }}" />
+			<StackLayout class="hr-light"></StackLayout>
+		</StackLayout> 
+		<Button text="SALVAR" tap="{{ salvar }}" class="bg-green white" />
+	</StackLayout>
+</Page>

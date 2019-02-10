@@ -1,0 +1,10 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" shownModally="onShownModally">
+	<StackLayout class="form">
+		<StackLayout class="input-field">
+			<Label text="{{ 'Quantidade ('+min+' - '+max+')' }}" class="label font-weight-bold m-b-5" />
+			<TextField text="{{ quantidade }}" keyboardType="number" class="input" />
+			<StackLayout class="hr-light"></StackLayout>
+		</StackLayout>
+		<Button text="Confirmar"  class="bg-green white" tap="{{ confirmar }}" />
+	</StackLayout>
+</Page>

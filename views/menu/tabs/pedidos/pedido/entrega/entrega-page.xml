@@ -1,0 +1,15 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page t-md" actionBarHidden="true">
+	<StackLayout class="m-x-15">
+		<Label text="Entrega" class="h1 font-weight-light m-b-20"  />
+		<StackLayout verticalAlignment="center">
+			<StackLayout class="border-b p-t-20 p-r-20 text-left" tap="{{ salvarIntegral }}">
+				<Label text="Integral" class="h2 font-weight-normal" />
+				<Label text="Receba seu pedido em um única remessa" class="t-md font-weight-thin" textWrap="true" />
+			</StackLayout>
+			<StackLayout class="border-b p-t-20 p-r-20 text-left m-b-15"  tap="{{ salvarParcial }}">
+				<Label text="Parcial" class="h2 font-weight-normal" />
+				<Label text="Receba seu pedido em 2 ou 3 remessas, conforme o estoque" class="t-md font-weight-thin" textWrap="true" />
+			</StackLayout>
+		</StackLayout>
+	</StackLayout>
+</Page>

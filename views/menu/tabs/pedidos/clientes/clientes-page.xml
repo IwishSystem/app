@@ -1,0 +1,19 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page t-md" loaded="{{ loaded }}" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:PullRefresh="nativescript-pulltorefresh" actionBarHidden="true">
+	<StackLayout class="m-x-15">
+		<DockLayout stretchLastChild="false">
+			<Label text="Clientes" dock="left" class="h1 font-weight-light" />
+			<Button text="{{ '0xe973' | getIcon }}" tap="{{ clienteNovo }}" class="icon t-30 black  text-right bg-white border-no" dock="right"  />
+		</DockLayout>
+		<StackLayout class="form">
+			<TextField text="{{ search }}" hint="CNPJ ou Nome Fantasia" class="input input-rounded t-md" style="padding: 8 20; margin: 0; "  />
+		</StackLayout>
+		<ListView class="list-group m-t-10" items="{{ clientes }}" itemTap="{{ onItemTap }}">
+			<ListView.itemTemplate>
+				<StackLayout class="border-b p-10">
+					<Label text="{{ nome_fantasia }}" class="t-md font-weight-light" />
+					<Label text="{{ cpf_cnpj }}" class="t-sm font-weight-thin" />
+				</StackLayout>
+			</ListView.itemTemplate>
+		</ListView>
+	</StackLayout>
+</Page>

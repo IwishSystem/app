@@ -1,0 +1,32 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page t-md" actionBarHidden="true">
+	<StackLayout class="m-y-5 form">
+		<Label text="Pedido Concluído" class="m-x-15 h1 font-weight-light" />
+		<StackLayout class="bg-gray-light p-15">
+			<StackLayout orientation="horizontal">
+				<Label text="Código do Pedido: " class="font-weight-normal" />
+				<Label text="{{ pedido.id_pedido }}" class="font-weight-thin" />					
+			</StackLayout>
+			<StackLayout orientation="horizontal">
+				<Label text="Pagamento: " class="font-weight-normal" />
+				<Label text="{{ pedido.pedido_pagamento.condicao_pagamento.descricao }}" class="font-weight-thin" />					
+			</StackLayout>
+			<StackLayout orientation="horizontal">
+				<Label text="Entrega: " class="font-weight-normal" />
+				<Label text="{{ pedido.entrega ? 'INTEGRAL' : 'PARCIAL' }}" class="font-weight-thin" />					
+			</StackLayout>
+			<StackLayout orientation="horizontal">
+				<Label text="Desconto: " class="font-weight-normal" />
+				<Label text="{{ pedido.pedido_pagamento.desconto+'%' }}" class="font-weight-thin" />					
+			</StackLayout>
+			<StackLayout orientation="horizontal">
+				<Label text="Total: " class="font-weight-normal" />
+				<Label text="{{ total }}" class="font-weight-thin" />					
+			</StackLayout>
+			<StackLayout orientation="horizontal">
+				<Label text="Com Desconto: " class="font-weight-normal" />
+				<Label text="{{ desconto }}" class="font-weight-thin" />					
+			</StackLayout>
+		</StackLayout>
+		<Button text="VOLTAR PARA HOME" tap="{{ gotoHome }}" class="bg-green white"  />				
+	</StackLayout>
+</Page>

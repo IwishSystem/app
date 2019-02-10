@@ -1,0 +1,32 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" xmlns:PullRefresh="nativescript-pulltorefresh" actionBarHidden="true" id="page_produtos">
+	<StackLayout class="m-x-10 m-t-5">
+		<Label text="Produtos " class="h1 font-weight-thin" />
+		<FlexboxLayout justifyContent="center" alignItems="center" class="h-full" flexDirection="column" visibility="{{ (!load && produtos.length==0) ? 'visible' : 'collapsed' }}">
+			<Label text="Nenhum produto encontrado " class="red" />
+		</FlexboxLayout>
+		<FlexboxLayout justifyContent="center" alignItems="center" class="h-full" flexDirection="column" visibility="{{ (load) ? 'visible' : 'collapsed' }}">
+			<Label text="Carregando os produtos" class="red" />
+			<ActivityIndicator class="activity-indicator red m-10" busy="true"></ActivityIndicator>
+		</FlexboxLayout>
+		<PullRefresh:PullToRefresh refresh="{{ refresh }}" visibility="{{ (!load && produtos.length!=0) ? 'visible' : 'collapsed' }}">	
+			<ListView items="{{ produtos }}" itemTap="{{ itemTap }}" separatorColor="transparent" class="list-group">
+				<ListView.itemTemplate>
+					<StackLayout class="border-b p-y-5" orientation="horizontal">
+						<StackLayout orientation="horizontal">
+							<StackLayout width="80" height="80" class="m-r-20 border" verticalAlignment="center">
+								<Image src="{{ imagem  | urlBefore }}" stretch="aspectFit" />
+							</StackLayout>
+							<DockLayout  stretchLastChild="false">
+								<StackLayout dock="top">
+									<Label text="{{ descricao }}" class="t-md font-weight-thin" />
+									<Label text="{{ codigo }}" class="t-sm font-weight-normal" /> 
+								</StackLayout>
+								<Label text="{{ preco  | concurrency }}" dock="bottom" class="t-lg red" />
+							</DockLayout>
+						</StackLayout>
+					</StackLayout>
+				</ListView.itemTemplate>
+			</ListView>
+		</PullRefresh:PullToRefresh>
+	</StackLayout>
+</Page>
