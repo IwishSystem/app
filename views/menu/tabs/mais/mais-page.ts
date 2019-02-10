@@ -12,5 +12,5 @@ export function navigatingTo(args: EventData) {
 export function backEvent(args) {
 	args.cancel = true;
 	var tab = <TabView>topmost().currentPage.parent.parent.parent;
-	tab.selectedIndex = 1;
+	tab.selectedIndex = 0;
 }

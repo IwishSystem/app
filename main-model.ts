@@ -16,7 +16,7 @@ export class MainModel extends Observable {
 		console.log(cache.getString('senha'));
 		console.log(cache.getString('api'));
 		console.log(cache.getString('url'));
-		console.log('===============');
+		console.log('=============');
 		if(api && url && login && senha){
 			this.default_page = 'views/menu/menu-page';
 		} else {

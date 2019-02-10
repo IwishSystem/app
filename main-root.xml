@@ -1,1 +1,1 @@
-<Frame defaultPage="{{ default_page }}" id="main_frame" loaded="loaded" />
+<Frame defaultPage="views/menu/menu-page" id="main_frame" />

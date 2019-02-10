@@ -17,7 +17,7 @@ The following CSS rule changes the font size of all UI
 components that have the btn class name.
 */
 
-TabView{font-size: 8;}
+TabView{font-size: 10;}
 .btn {
     font-size: 18;
 }

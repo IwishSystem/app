@@ -1,6 +1,7 @@
 import { EventData } from "tns-core-modules/data/observable";
 import { topmost } from "tns-core-modules/ui/frame";
 import { TabView } from "tns-core-modules/ui/tab-view";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 
 export function navigatingTo(args: EventData) {
 	
@@ -20,6 +21,16 @@ export function loaded(args) {
 
 export function backEvent(args) {
 	args.cancel = true;
-	var tab = <TabView>topmost().currentPage.parent.parent.parent;
-	tab.selectedIndex = 0;
+	dialogs.confirm({
+		title: "",
+		message: "Deseja realmente fechar o aplicativo? ",
+		okButtonText: "Sair",
+		cancelButtonText: "Cancelar",
+		neutralButtonText: ""
+	}).then(function (result) {
+		if(result){
+			// @ts-ignore
+			java.lang.System.exit(0);
+		}
+	});
 }

@@ -34,67 +34,148 @@ export class MenuModel extends Observable {
         this.scan = '';
         this.produtos_search = [];
 
-        this.set("home", "res://home2");
-        this.set("pedidos", 'res://pedido1');
+        this.set("home", "res://home1");
+        this.set("pedidos", 'res://pedido2');
         this.set("sacola", 'res://sacola1');
         this.set("loja", 'res://loja1');
         this.set("mais", 'res://mais1');
 
+        console.log('opaa');
 
-        if(storage.getItem('pedido')){
-            this.default_pedido_page = 'views/menu/tabs/pedidos/pedido/pedido-page';
-        } else {
-            this.default_pedido_page = 'views/menu/tabs/pedidos/pedidos-page';
-        }
 
-        this.on(Observable.propertyChangeEvent, (propertyChangeData: PropertyChangeData) => {
-            if (propertyChangeData.propertyName === "scan") {
-                this.scanUpdate();
+        //if(storage.getItem('pedido')){
+            //    this.default_pedido_page = 'views/menu/tabs/pedidos/pedido/pedido-page';
+            //} else {
+                this.default_pedido_page = 'views/menu/tabs/pedidos/pedidos-page';
+                //}
+
+                this.on(Observable.propertyChangeEvent, (propertyChangeData: PropertyChangeData) => {
+                    if (propertyChangeData.propertyName === "scan") {
+                        this.scanUpdate();
+                    }
+                }, this);
+
+                this.on(Observable.propertyChangeEvent, (propertyChangeData: PropertyChangeData) => {
+                    if (propertyChangeData.propertyName === "search") {
+                        this.searchChange();
+                    }
+                }, this);
+
+                var login = cache.getString('login', null);
+                var senha = cache.getString('senha', null);
+                var modal = cache.getNumber('modal', 0);
+                console.log('login:'+login);
+                console.log('senha:'+senha);
+                if((!login || !senha) && modal == 0){
+                    this.login();
+                }
+
             }
-        }, this);
 
-        this.on(Observable.propertyChangeEvent, (propertyChangeData: PropertyChangeData) => {
-            if (propertyChangeData.propertyName === "search") {
-                this.searchChange();
+            public login(){
+                cache.setNumber('modal', 1);
+                this.page.showModal("views/modal-login/login-page", {},
+                    (result) => {
+                        cache.setNumber('modal', 0);
+                        this.updateDataLogin();
+                    }, false);
             }
-        }, this);
+
+            public updateDataLogin(){
+                this.axiosCategorias();
+                this.axiosProdutos();
+                this.axiosClientes();   
+            }
+
+                public axiosCategorias(){
+        axios.get(cache.getString('api')+'/categorias').then(
+            (result) => {
+                if(result.status == 200) {
+                    storage.setItemObject('categorias', result.data.categorias);
+                    this.set('categorias', result.data.categorias);
+                } else {
+                    alert({title: "", message: "Categorias não carregado1", okButtonText: ""});
+                }
+            }, (error) => {
+                if(error.response.status == 404 || error.response.status == 401){
+                    alert({title: "", message: "Categorias não carregado2:"+ error.response.status, okButtonText: ""});
+                } else {
+                    alert({title: "", message: "Categorias não carregado3", okButtonText: ""});
+                }
+            });
     }
 
-    public searchChange(){
-
-        if (this.search != "") {
-            let produtos = storage.getItem('produtos') || [];
-            let i = 0;
-            let count = 0;
-            let produtos_filtrados = [];
-            for(i=0; i<produtos.length;i++){
-                let produto = produtos[i];
-                console.log('A');
-                if (produto.descricao.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
-                    console.log('B');
-                    produtos_filtrados.push(produto);
-                    count++;
-                } else if (produto.codigo.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
-                    console.log('B');
-                    produtos_filtrados.push(produto);
-                    count++;
-                } else if (produto.codigo_2 != null) {
-                    if (produto.codigo_2.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
-                        console.log('B');
-                        produtos_filtrados.push(produto);
-                        count++;
-                    }  
+    public axiosProdutos(){
+        axios.get(cache.getString("api") +'/produtos', {auth: {username: 'admin', password: '123456'}}).then(
+            result => {
+                if(result.status == 200) {
+                    storage.setItemObject('produtos', result.data.produtos);
+                } else {
+                    alert({title: "", message: "Produtos não carregado1", okButtonText: ""});
                 }
-
-                if(count == 3){
-                    break;
+            },
+            error => {
+                if(error.response.status == 404 || error.response.status == 401){
+                    alert({title: "", message: "Produtos não carregado2", okButtonText: ""});
+                } else {
+                    alert({title: "", message: "Produtos não carregado3", okButtonText: ""});
                 }
-            }
-            this.set('produtos_search', produtos_filtrados);
-        } else {
-            this.set('produtos_search', []);
-        }
-        //  http://192.168.0.19
+            });
+    }
+
+    public axiosClientes(){
+        axios.get(cache.getString("api") +'/clientes').then(
+            result => {
+                if(result.status == 200) {
+                    storage.setItemObject('clientes', result.data.clientes);
+                } else {
+                    alert({title: "", message: "Clientes não carregado 1", okButtonText: ""});
+                }
+            },
+            error => {
+                if(error.response.status == 404 || error.response.status == 401){
+                    alert({title: "", message: "Clientes não carregado2", okButtonText: ""});
+                } else {
+                    alert({title: "", message: "Clientes não carregado3", okButtonText: ""});
+                }
+            });
+    }
+
+            public searchChange(){
+
+                if (this.search != "") {
+                    let produtos = storage.getItem('produtos') || [];
+                    let i = 0;
+                    let count = 0;
+                    let produtos_filtrados = [];
+                    for(i=0; i<produtos.length;i++){
+                        let produto = produtos[i];
+                        console.log('A');
+                        if (produto.descricao.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
+                            console.log('B');
+                            produtos_filtrados.push(produto);
+                            count++;
+                        } else if (produto.codigo.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
+                            console.log('B');
+                            produtos_filtrados.push(produto);
+                            count++;
+                        } else if (produto.codigo_2 != null) {
+                            if (produto.codigo_2.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
+                                console.log('B');
+                                produtos_filtrados.push(produto);
+                                count++;
+                            }  
+                        }
+
+                        if(count == 3){
+                            break;
+                        }
+                    }
+                    this.set('produtos_search', produtos_filtrados);
+                } else {
+                    this.set('produtos_search', []);
+                }
+                //  http://192.168.0.19
 
 /*
         (storage.getItem('produtos') || []).find(
@@ -147,26 +228,24 @@ export class MenuModel extends Observable {
     }
 
     //K81163   http://scancode.com.br/app  app@app.com.br
-    public loaded(){
-        console.log('MENU LOADED!!');
-    }
+
 
     public changed(args) {
         if (args.oldIndex !== -1) {
             const vm = (<TabView>args.object).bindingContext;
 
-            this.set("home", "res://home1");
+            //this.set("home", "res://home1");
             this.set("pedidos", 'res://pedido1');
             this.set("sacola", 'res://sacola1');
             this.set("loja", 'res://loja1');
             this.set("mais", 'res://mais1');
 
             switch(args.newIndex){
-                case 0: this.set("home", "res://home2"); break;
-                case 1: this.set("pedidos", "res://pedido2"); break;
-                case 2: this.set("sacola", "res://sacola2"); this.sacolaSettings(args);  break;
-                case 3: this.set("loja", "res://loja2"); break;
-                case 4: this.set("mais", "res://mais2"); break;
+                //case 0: this.set("home", "res://home2"); break;
+                case 0: this.set("pedidos", "res://pedido2"); break;
+                case 1: this.set("sacola", "res://sacola2"); this.sacolaSettings(args);  break;
+                case 2: this.set("loja", "res://loja2"); break;
+                case 3: this.set("mais", "res://mais2"); break;
             }
         }
 
@@ -252,5 +331,6 @@ export class MenuModel extends Observable {
             }
         }
     }
+
 
 }

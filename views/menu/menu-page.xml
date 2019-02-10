@@ -1,7 +1,4 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd"  class="page" navigatingTo="navigatingTo" id="page_menu" loaded="{{ loaded }}" >
-  <StackLayout>
-    <Label text="opa" />
-  </StackLayout>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"  class="page" navigatingTo="navigatingTo" id="page_menu" loaded="loaded" >
 	<Page.actionBar>
 		<ActionBar class="bg-red">
 			<StackLayout style="width:90%;">
@@ -13,9 +10,6 @@
     <GridLayout class="bg-gray">
         <StackLayout row="0" col="0">
            <TabView id="tabViewContainer" androidTabsPosition="bottom" selectedIndexChanged="{{ changed }}" tabBackgroundColor="white" selectedTabTextColor="#ee3344">
-             <TabViewItem title="Home" iconSource="{{ home }}">
-              <Frame defaultPage="views/menu/tabs/home/home-page" id="home_frame" />
-          </TabViewItem>
           <TabViewItem title="Pedidos" iconSource="{{ pedidos }}">
               <Frame defaultPage="{{ default_pedido_page }}" id="pedidos_frame" />
           </TabViewItem>

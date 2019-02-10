@@ -3,7 +3,15 @@ import {displayedEvent, launchEvent, resumeEvent, suspendEvent, ApplicationEvent
 import * as application from "tns-core-modules/application";
 import * as cache from "tns-core-modules/application-settings";
 
-application.on(launchEvent, (args: LaunchEventData) => {});
+application.on(launchEvent, (args: LaunchEventData) => {
+//	                    cache.setString('login', 'app');
+//                    cache.setString('senha', '123456');
+//                    cache.setString('url', 'http://scancode.com.br/chale');
+//                    cache.setString('api', 'http://scancode.com.br/chale/api');
+//                    cache.setNumber('id_representante', 2);
+
+
+});
 application.on(displayedEvent, (args: ApplicationEventData) => {});
 application.on(suspendEvent, (args: ApplicationEventData) => {});
 application.on(resumeEvent, (args: ApplicationEventData) => {});
@@ -66,3 +74,4 @@ function getBadeFrame(){
 application.setResources( { getIcon, concurrency, historicoItems, historicoBg, urlBefore });
 
 application.run({ moduleName: "main-root" });
+//application.run({ moduleName: "views/menu/menu-page" });

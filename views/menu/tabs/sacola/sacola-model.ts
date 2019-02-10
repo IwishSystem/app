@@ -47,7 +47,7 @@ export class SacolaModel extends Observable {
 		var frameSacola = <Frame>topmost().currentPage.parent.parent.parent.parent.getViewById('loja_frame');
 		frameSacola.navigate({moduleName: "views/menu/tabs/loja/produto/produto-page", backstackVisible: false, context: { id_produto: args.view.bindingContext.produto.id_produto }});
 		var tab = <TabView>topmost().currentPage.parent.parent.parent;
-		tab.selectedIndex = 3;
+		tab.selectedIndex = 2;
 
 	}
 

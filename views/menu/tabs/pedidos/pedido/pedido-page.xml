@@ -1,4 +1,4 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md" actionBarHidden="true">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md">
 	<DockLayout>  
 		<StackLayout dock="top" class="p-x-15 bg-gray-light">
 			<StackLayout orientation="horizontal">

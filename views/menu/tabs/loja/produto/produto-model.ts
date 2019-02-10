@@ -205,7 +205,7 @@ export class ProdutoModel extends Observable {
                             topmost().goBack();
                             storage.setItemObject('pedido', result.data.pedido);
                             var tab = <TabView>topmost().currentPage.parent.parent.parent;
-                            tab.selectedIndex = 2;
+                            tab.selectedIndex = 1;
                         } else {
                             this.redirectLogin(page);
                         }
@@ -225,7 +225,7 @@ export class ProdutoModel extends Observable {
                             console.log(result.data);
                             storage.setItemObject('pedido', result.data.pedido);
                             var tab = <TabView>topmost().currentPage.parent.parent.parent;
-                            tab.selectedIndex = 2;
+                            tab.selectedIndex = 1;
                         } else {
                             this.redirectLogin(page);
                         }

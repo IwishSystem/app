@@ -28,6 +28,7 @@ export class LojaModel extends Observable {
 
     public axiosCategorias(){
         this.set('load', true);
+        console.log(cache.getString('api')+'/categorias');
         axios.get(cache.getString('api')+'/categorias', {auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
             (result) => {
                 this.set('load', false);
