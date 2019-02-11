@@ -40,54 +40,58 @@ export class MenuModel extends Observable {
         this.set("loja", 'res://loja1');
         this.set("mais", 'res://mais1');
 
-        console.log('opaa');
+//        console.log(storage.getItem('pedido'));
 
 
-        //if(storage.getItem('pedido')){
-            //    this.default_pedido_page = 'views/menu/tabs/pedidos/pedido/pedido-page';
-            //} else {
-                this.default_pedido_page = 'views/menu/tabs/pedidos/pedidos-page';
-                //}
+        if(storage.getItem('pedido')){
+            this.default_pedido_page = 'views/menu/tabs/pedidos/pedido/pedido-page';
+        } else {
+            this.default_pedido_page = 'views/menu/tabs/pedidos/pedidos-page';
+        }
 
-                this.on(Observable.propertyChangeEvent, (propertyChangeData: PropertyChangeData) => {
-                    if (propertyChangeData.propertyName === "scan") {
-                        this.scanUpdate();
-                    }
-                }, this);
-
-                this.on(Observable.propertyChangeEvent, (propertyChangeData: PropertyChangeData) => {
-                    if (propertyChangeData.propertyName === "search") {
-                        this.searchChange();
-                    }
-                }, this);
-
-                var login = cache.getString('login', null);
-                var senha = cache.getString('senha', null);
-                var modal = cache.getNumber('modal', 0);
-                console.log('login:'+login);
-                console.log('senha:'+senha);
-                if((!login || !senha) && modal == 0){
-                    this.login();
-                }
-
+        this.on(Observable.propertyChangeEvent, (propertyChangeData: PropertyChangeData) => {
+            if (propertyChangeData.propertyName === "scan") {
+                this.scanUpdate();
             }
+        }, this);
 
-            public login(){
-                cache.setNumber('modal', 1);
-                this.page.showModal("views/modal-login/login-page", {},
-                    (result) => {
-                        cache.setNumber('modal', 0);
-                        this.updateDataLogin();
-                    }, false);
+        this.on(Observable.propertyChangeEvent, (propertyChangeData: PropertyChangeData) => {
+            if (propertyChangeData.propertyName === "search") {
+                this.searchChange();
             }
+        }, this);
 
-            public updateDataLogin(){
-                this.axiosCategorias();
-                this.axiosProdutos();
-                this.axiosClientes();   
-            }
+        var login = cache.getString('login', null);
+        var senha = cache.getString('senha', null);
+        var modal = cache.getNumber('modal', 0);
+        console.log('login:'+login);
+        console.log('senha:'+senha);
+        console.log('modal:'+modal);
+        if((!login || !senha) && modal == 0){
+            this.login();
+        }
+       // this.login();
+        //setTimeout(function(){ console.log(page.getViewById('modal-login'));  }, 3000);
+      
 
-                public axiosCategorias(){
+    }
+
+    public login(){
+        cache.setNumber('modal', 1);
+        this.page.showModal("views/modal-login/login-page", {},
+            (result) => {
+                cache.setNumber('modal', 0);
+                this.updateDataLogin();
+            }, true);
+    }
+
+    public updateDataLogin(){
+        this.axiosCategorias();
+        this.axiosProdutos();
+        this.axiosClientes();   
+    }
+
+    public axiosCategorias(){
         axios.get(cache.getString('api')+'/categorias').then(
             (result) => {
                 if(result.status == 200) {
@@ -141,41 +145,41 @@ export class MenuModel extends Observable {
             });
     }
 
-            public searchChange(){
+    public searchChange(){
 
-                if (this.search != "") {
-                    let produtos = storage.getItem('produtos') || [];
-                    let i = 0;
-                    let count = 0;
-                    let produtos_filtrados = [];
-                    for(i=0; i<produtos.length;i++){
-                        let produto = produtos[i];
-                        console.log('A');
-                        if (produto.descricao.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
-                            console.log('B');
-                            produtos_filtrados.push(produto);
-                            count++;
-                        } else if (produto.codigo.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
-                            console.log('B');
-                            produtos_filtrados.push(produto);
-                            count++;
-                        } else if (produto.codigo_2 != null) {
-                            if (produto.codigo_2.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
-                                console.log('B');
-                                produtos_filtrados.push(produto);
-                                count++;
-                            }  
-                        }
-
-                        if(count == 3){
-                            break;
-                        }
-                    }
-                    this.set('produtos_search', produtos_filtrados);
-                } else {
-                    this.set('produtos_search', []);
+        if (this.search != "") {
+            let produtos = storage.getItem('produtos') || [];
+            let i = 0;
+            let count = 0;
+            let produtos_filtrados = [];
+            for(i=0; i<produtos.length;i++){
+                let produto = produtos[i];
+                console.log('A');
+                if (produto.descricao.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
+                    console.log('B');
+                    produtos_filtrados.push(produto);
+                    count++;
+                } else if (produto.codigo.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
+                    console.log('B');
+                    produtos_filtrados.push(produto);
+                    count++;
+                } else if (produto.codigo_2 != null) {
+                    if (produto.codigo_2.toLowerCase().indexOf(this.search.toLowerCase()) != -1) {
+                        console.log('B');
+                        produtos_filtrados.push(produto);
+                        count++;
+                    }  
                 }
-                //  http://192.168.0.19
+
+                if(count == 3){
+                    break;
+                }
+            }
+            this.set('produtos_search', produtos_filtrados);
+        } else {
+            this.set('produtos_search', []);
+        }
+        //  http://192.168.0.19
 
 /*
         (storage.getItem('produtos') || []).find(
@@ -222,7 +226,7 @@ export class MenuModel extends Observable {
 
 
         frame_loja.navigate({moduleName: "views/menu/tabs/loja/produto/produto-page", backstackVisible: false, context: { id_produto: args.view.bindingContext.id_produto }});
-        tabview.selectedIndex = 3;
+        tabview.selectedIndex = 2;
         search_bar.text = '';
 
     }

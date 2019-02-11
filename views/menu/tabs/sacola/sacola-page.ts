@@ -18,9 +18,6 @@ export function backEvent(args) {
 
 export function updateSacola(page: Page) {
 
-	console.log(page);
-//	var page = <Page>topmost().currentPage;
-//	console.log(page.frame);
 }
 
 export function onSwipeCellStarted(args) {
@@ -31,17 +28,4 @@ export function onSwipeCellStarted(args) {
     swipeLimits.left = leftItem.getMeasuredWidth();
     swipeLimits.right = rightItem.getMeasuredWidth();
     swipeLimits.threshold = leftItem.getMeasuredWidth() / 2;
-}
-
-export function onLeftSwipeClick(args) {
-    /*const listView = <RadListView>topmost().currentPage.getViewById("listView");
-    console.log("Left swipe click");
-    listView.notifySwipeToExecuteFinished();*/
-}
-
-export function onRightSwipeClick(args) {
-    /*const listView = <RadListView>topmost().currentPage.getViewById("listView");
-    console.log("Right swipe click");
-    const viewModel: ViewModel = <ViewModel>listView.bindingContext;
-    viewModel.items.splice(viewModel.items.indexOf(args.object.bindingContext), 1);*/
 }

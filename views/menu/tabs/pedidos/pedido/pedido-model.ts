@@ -39,9 +39,8 @@ export class PedidoModel extends Observable {
     }
 
     public update(){
-        console.log('AQUI E BUG2'+ storage.getItem('pedido'));
         this.set('pedido', storage.getItem('pedido'));   
-        console.log(this.pedido);
+
         //observacao
         if(this.pedido.observacao == null){
             this.set('observacao', 'SEM OBSERVACAO');

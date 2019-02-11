@@ -7,25 +7,20 @@ export class LoginModel extends Observable {
 
     public login: string;
     public senha: string;
-    public url: string;
-    public api: string;
 
     constructor() {
         super();
 
         this.login = '';
         this.senha = '';
-        this.url = '';
-        this.api = '';
     }   
 
     public auth(args) {
-        console.log(this.url+'/api/representantes/login');
-        axios.get(this.url+'/api/representantes/login', {auth: {username: this.login, password: this.senha}}).then(
+
+        console.log(cache.getString('api') +'/representantes/login');
+        axios.get(cache.getString('api') +'/representantes/login', {auth: {username: this.login, password: this.senha}}).then(
             (result) => {
                 if(result.status == 200){
-                    cache.setString('url', this.url);
-                    cache.setString('api', this.url+'/api');
                     cache.setString('login', this.login);
                     cache.setString('senha', this.senha);
                     cache.setNumber('id_representante', result.data.representante.id_representante);

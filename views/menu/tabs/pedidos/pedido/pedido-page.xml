@@ -1,5 +1,5 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md">
-	<DockLayout>  
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md" actionBarHidden="true" >
+	<DockLayout >  
 		<StackLayout dock="top" class="p-x-15 bg-gray-light">
 			<StackLayout orientation="horizontal">
 				<Label text="Pedido  " class="h1 font-weight-light"  />

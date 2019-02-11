@@ -22,8 +22,7 @@ export class MainModel extends Observable {
 		} else {
 			this.default_page = 'views/login/login-page';
 		}
-		console.log('Page e: '+this.default_page);
-
+		
 	}
 }
 // http://192.168.43.157 app@app.com.br  123456

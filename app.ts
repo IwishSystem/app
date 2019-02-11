@@ -4,12 +4,9 @@ import * as application from "tns-core-modules/application";
 import * as cache from "tns-core-modules/application-settings";
 
 application.on(launchEvent, (args: LaunchEventData) => {
-//	                    cache.setString('login', 'app');
-//                    cache.setString('senha', '123456');
-//                    cache.setString('url', 'http://scancode.com.br/chale');
-//                    cache.setString('api', 'http://scancode.com.br/chale/api');
-//                    cache.setNumber('id_representante', 2);
-
+	cache.setNumber('modal', 0);
+	cache.setString('url', 'http://scancode.com.br/chale');
+	cache.setString('api', 'http://scancode.com.br/chale/api');
 
 });
 application.on(displayedEvent, (args: ApplicationEventData) => {});

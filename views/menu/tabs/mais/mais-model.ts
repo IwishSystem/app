@@ -9,37 +9,21 @@ export class MaisModel extends Observable {
 	}
 
 	public sair(args){
-		cache.remove("login");
-		cache.remove("senha");
-		storage.clear();
-
+		
 		const main_frame = args.object.page.parent.page.frame;
+		const pedidos_frame = main_frame.getViewById('pedidos_frame');
 		const tabview = main_frame.getViewById('tabViewContainer');
 		const page_menu = main_frame.getViewById('page_menu');
 		
+		console.log(pedidos_frame);
+		console.log(pedidos_frame);
 
+		pedidos_frame.navigate({moduleName: "views/menu/tabs/pedidos/pedidos-page", clearHistory: true});
 		tabview.selectedIndex = 0;
 
+
 		var bindingContext = page_menu.bindingContext;
-        bindingContext.login();
-
-
-
-		
-
-
-		//const tabview = main_frame.getViewById('tabViewContainer');
-
-
-		//console.log(tabview);
-		//		cache.remove("login");
-		//		cache.remove("senha");
-		//		storage.clear();
-
-		//const page = args.object.page;
-		//const frame = page.parent.parent.parent.parent.parent.parent.frame;
-		//frame.navigate({moduleName: "views/login/login-page", clearHistory: true});		
+        bindingContext.login();	
 	}
 
 }
-//http://scancode.com.br/ordesig   http://scancode.com.br/chale

@@ -42,6 +42,25 @@ export class ClienteNovoModel extends Observable {
     }
 
     public abrirPedido(args){
+        if(this.cpf_cnpj == ""){
+            alert('CPF OU CNPJ é obrigatório');
+            return;
+        }
+        if(this.razao_social == ""){
+            alert('Razão Social é obrigatório');
+            return;
+        }
+        if(this.email == ""){
+            alert('Email é obrigatório');
+            return;
+        }
+        if(this.tel_1 == ""){
+            alert('Telefone é obrigatório');
+            return;
+        }
+
+
+
         var page = args.object.page;
         axios.post(cache.getString("api") + "/pedidos/novo/cliente", {
             nome_fantasia: this.nome_fantasia,
