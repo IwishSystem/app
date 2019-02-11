@@ -26,6 +26,8 @@ export class MenuModel extends Observable {
 
     public page: Page;
 
+    public index_menu;
+
     constructor(page: Page) {
         super();
         this.page = page;
@@ -34,13 +36,23 @@ export class MenuModel extends Observable {
         this.scan = '';
         this.produtos_search = [];
 
-        this.set("home", "res://home1");
-        this.set("pedidos", 'res://pedido2');
+        this.index_menu = cache.getNumber('index_menu', 0);
+
+        this.set("pedidos", 'res://pedido1');
         this.set("sacola", 'res://sacola1');
         this.set("loja", 'res://loja1');
         this.set("mais", 'res://mais1');
 
-//        console.log(storage.getItem('pedido'));
+        switch(this.index_menu){
+            //case 0: this.set("home", "res://home2"); break;
+            case 0: this.set("pedidos", "res://pedido2"); break;
+            case 1: this.set("sacola", "res://sacola2"); break;
+            case 2: this.set("loja", "res://loja2"); break;
+            case 3: this.set("mais", "res://mais2"); break;
+        }
+        //        this.set("home", "res://home1");
+
+        //        console.log(storage.getItem('pedido'));
 
 
         if(storage.getItem('pedido')){
@@ -70,9 +82,9 @@ export class MenuModel extends Observable {
         if((!login || !senha) && modal == 0){
             this.login();
         }
-       // this.login();
+        // this.login();
         //setTimeout(function(){ console.log(page.getViewById('modal-login'));  }, 3000);
-      
+
 
     }
 
@@ -251,6 +263,7 @@ export class MenuModel extends Observable {
                 case 2: this.set("loja", "res://loja2"); break;
                 case 3: this.set("mais", "res://mais2"); break;
             }
+            cache.setNumber('index_menu', args.newIndex);
         }
 
     }

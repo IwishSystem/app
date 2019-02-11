@@ -6,6 +6,7 @@ import { TabView } from "tns-core-modules/ui/tab-view";
 import * as cache from "tns-core-modules/application-settings";
 import {SearchBar} from "ui/search-bar";
 import axios from "axios";
+import {LoadingIndicator} from "nativescript-loading-indicator-new";
 
 import { RadListView } from 'nativescript-ui-listview';
 
@@ -15,12 +16,36 @@ import {isAndroid} from "platform";
 
 export class SacolaModel extends Observable {
 
+	public loader;
+	public loader_options;
+
 	public page;
 	public pedido;
 	public items;
 
 	constructor(page) {
 		super(); 
+		this.loader = new LoadingIndicator();
+		this.loader_options =  {
+			message: 'Removendo da Sacola...',
+			progress: 0.65,
+			android: {
+				indeterminate: true,
+				cancelable: false,
+				max: 100,
+				progressNumberFormat: "%1d/%2d",
+				progressPercentFormat: 0.53,
+				progressStyle: 1,
+				secondaryProgress: 1
+			},
+			ios: {
+				details: "Additional detail note!",
+				square: false,
+				margin: 10,
+				dimBackground: true,
+				color: "#4B9ED6"
+			}
+		};
 		this.page = page;
 		this.items = new ObservableArray();
 		this.pedido = null;
@@ -62,6 +87,8 @@ export class SacolaModel extends Observable {
 		const listView = <RadListView>this.page.getViewById("listView");
 		listView.notifySwipeToExecuteFinished();
 		const viewModel = listView.bindingContext;
+
+		this.loader.show(this.loader_options);
 		axios.delete(cache.getString('api') + '/pedidos/'+this.pedido.id_pedido+'/pedido_item/'+args.object.bindingContext.id+'/destroy', {auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
 			result => {
 				if(result.status == 200) {
@@ -71,6 +98,7 @@ export class SacolaModel extends Observable {
 				} else {
 					this.redirectLogin(this.page);
 				}
+				this.loader.hide();
 			},
 			error => {
 				alert(error.response.status);
@@ -79,6 +107,7 @@ export class SacolaModel extends Observable {
 				} else {
 					alert({title: "", message: "Opps,Ocorreu alguma falha", okButtonText: ""});
 				}
+				this.loader.hide();
 			});
 	}
 

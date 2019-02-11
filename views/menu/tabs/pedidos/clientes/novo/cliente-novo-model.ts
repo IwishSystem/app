@@ -3,8 +3,12 @@ import { topmost } from "tns-core-modules/ui/frame";
 import * as storage from "nativescript-localstorage";
 import * as cache from "tns-core-modules/application-settings";
 import axios from "axios";
+import {LoadingIndicator} from "nativescript-loading-indicator-new";
 
 export class ClienteNovoModel extends Observable {
+
+    public loader;
+    public loader_options;
 
     public nome_fantasia: string;
     public razao_social: string;
@@ -24,6 +28,27 @@ export class ClienteNovoModel extends Observable {
 
     constructor() {
         super();
+        this.loader = new LoadingIndicator();
+        this.loader_options =  {
+            message: 'Abrindo novo pedido...',
+            progress: 0.65,
+            android: {
+                indeterminate: true,
+                cancelable: false,
+                max: 100,
+                progressNumberFormat: "%1d/%2d",
+                progressPercentFormat: 0.53,
+                progressStyle: 1,
+                secondaryProgress: 1
+            },
+            ios: {
+                details: "Additional detail note!",
+                square: false,
+                margin: 10,
+                dimBackground: true,
+                color: "#4B9ED6"
+            }
+        };
         this.nome_fantasia = "";
         this.razao_social = "";
         this.cpf_cnpj = "";
@@ -62,6 +87,7 @@ export class ClienteNovoModel extends Observable {
 
 
         var page = args.object.page;
+        this.loader.show(this.loader_options);
         axios.post(cache.getString("api") + "/pedidos/novo/cliente", {
             nome_fantasia: this.nome_fantasia,
             razao_social: this.razao_social,
@@ -88,6 +114,7 @@ export class ClienteNovoModel extends Observable {
                 } else {
                     this.redirectLogin(page);
                 }
+                this.loader.hide();
             },
             error => {
                 console.log('status error: '+error.response.status);
@@ -105,6 +132,7 @@ export class ClienteNovoModel extends Observable {
                 } else {
                     alert({title: "", message: "Opps,Ocorreu alguma falha", okButtonText: ""});
                 }
+                this.loader.hide();
             });
         }
 
@@ -166,7 +194,7 @@ export class ClienteNovoModel extends Observable {
         }
 
         private redirectLogin(page){
-            var frame = page.parent.parent.parent.parent.frame;
+            var frame = page.frame.page.frame;
             frame.navigate({moduleName: "views/login/login-page", clearHistory: true});
         }
 

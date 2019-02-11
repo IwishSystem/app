@@ -6,8 +6,12 @@ import { topmost, Frame } from "tns-core-modules/ui/frame";
 import { TabView } from "tns-core-modules/ui/tab-view";
 import { View } from "ui/core/view";
 import { prompt, PromptOptions, PromptResult } from "ui/dialogs";
+import {LoadingIndicator} from "nativescript-loading-indicator-new";
 
 export class ProdutoModel extends Observable {
+
+    public loader;
+    public loader_options;
 
     public url: string;
     
@@ -39,6 +43,27 @@ export class ProdutoModel extends Observable {
 
     constructor(id_produto: number) {
         super();
+        this.loader = new LoadingIndicator();
+        this.loader_options =  {
+            message: 'Adicionando na Sacola...',
+            progress: 0.65,
+            android: {
+                indeterminate: true,
+                cancelable: false,
+                max: 100,
+                progressNumberFormat: "%1d/%2d",
+                progressPercentFormat: 0.53,
+                progressStyle: 1,
+                secondaryProgress: 1
+            },
+            ios: {
+                details: "Additional detail note!",
+                square: false,
+                margin: 10,
+                dimBackground: true,
+                color: "#4B9ED6"
+            }
+        };
         this.id_produto = id_produto;
         this.url = cache.getString('url');
 
@@ -199,6 +224,7 @@ export class ProdutoModel extends Observable {
         var total_estoque = this.produto.produto_estoque.disponivel_atual+this.produto.produto_estoque.disponivel_futuro;
         if(this.pedido.id_status == 6 && total_estoque >= this.quantidade_inicio){
             if(this.pedido_item){
+                this.loader.show(this.loader_options);
                 axios.patch(cache.getString("api")+'/pedidos/'+this.pedido.id_pedido+'/pedido_item/'+this.pedido_item.id, {quantidade: this.quantidade, observacao: this.observacao, desconto: this.desconto}, {auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
                     (result) => {
                         if(result.status == 200) {
@@ -209,6 +235,7 @@ export class ProdutoModel extends Observable {
                         } else {
                             this.redirectLogin(page);
                         }
+                        this.loader.hide();
                     }, (error) => {
                         if(error.response.status == 404 || error.response.status == 401){
                             this.redirectLogin(page);
@@ -216,8 +243,10 @@ export class ProdutoModel extends Observable {
                             console.log(error.response.data);
                             alert({title: "", message: "Opps, Ocorreu alguma falha1", okButtonText: ""});
                         }
+                        this.loader.hide();
                     });
             } else {
+                this.loader.show(this.loader_options);
                 axios.post(cache.getString("api")+'/pedidos/'+this.pedido.id_pedido+'/pedido_item', {id_produto: this.produto.id_produto, preco: this.produto.preco, quantidade: this.quantidade, observacao: this.observacao, desconto: this.desconto}, {auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
                     (result) => {
                         if(result.status == 200) {
@@ -229,6 +258,7 @@ export class ProdutoModel extends Observable {
                         } else {
                             this.redirectLogin(page);
                         }
+                        this.loader.hide();
                     }, (error) => {
                         if(error.response.status == 404 || error.response.status == 401){
                             this.redirectLogin(page);
@@ -236,6 +266,7 @@ export class ProdutoModel extends Observable {
                             console.log(error.response.data);
                             alert({title: "", message: "Opps, Ocorreu alguma falha2", okButtonText: ""});
                         }
+                        this.loader.hide();
                     });
             }
         } else {

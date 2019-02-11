@@ -5,8 +5,12 @@ import * as cache from "tns-core-modules/application-settings";
 import axios from "axios";
 import { BarcodeScanner } from "nativescript-barcodescanner";
 import { TabView } from "tns-core-modules/ui/tab-view";
+import {LoadingIndicator} from "nativescript-loading-indicator-new";
 
 export class PedidoModel extends Observable {
+
+    public loader;
+    public loader_options;
 
     public page;
     public pedido;
@@ -30,6 +34,27 @@ export class PedidoModel extends Observable {
 
     constructor(page) {
         super(); 
+        this.loader = new LoadingIndicator();
+        this.loader_options =  {
+            message: 'Imprimindo Pedido...',
+            progress: 0.65,
+            android: {
+                indeterminate: true,
+                cancelable: false,
+                max: 100,
+                progressNumberFormat: "%1d/%2d",
+                progressPercentFormat: 0.53,
+                progressStyle: 1,
+                secondaryProgress: 1
+            },
+            ios: {
+                details: "Additional detail note!",
+                square: false,
+                margin: 10,
+                dimBackground: true,
+                color: "#4B9ED6"
+            }
+        };
         this.page = page;
         this.update();
     }
@@ -359,7 +384,8 @@ export class PedidoModel extends Observable {
                 if(this.pedido.pedido_pagamento.condicao_pagamento.valor_minimo > this.preco_total_minimo){
                     alert({title: "", message: "Valor minimo para esta forma de pagamento é R$"+this.pedido.pedido_pagamento.condicao_pagamento.valor_minimo, okButtonText: ""});
                 } else {
-                    topmost().navigate("views/menu/tabs/pedidos/pedido/assinatura/assinatura-page");
+                    this.finalizarPedidoFinal(args);
+                    //topmost().navigate("views/menu/tabs/pedidos/pedido/assinatura/assinatura-page");
                 }
             } else {
                 alert({title: "", message: "Pagmento indefinido", okButtonText: ""});
@@ -385,9 +411,31 @@ export class PedidoModel extends Observable {
         } 
     }
 
+
+    private finalizarPedidoFinal(args){
+        this.loader.show(this.loader_options);
+        axios.patch(cache.getString('api') + '/pedidos/'+this.pedido.id_pedido+'/update',{id_status: 2}, {auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
+            (result) => {
+                if(result.status == 200) {
+                    this.page.frame.navigate({moduleName: "views/menu/tabs/pedidos/pedidos-page", clearHistory: true});
+                } else {
+                    this.redirectLogin(this.page);
+                }
+                this.loader.hide();
+
+            },
+            (error) => {
+                if(error.response.status == 404 || error.response.status == 401){
+                    this.redirectLogin(this.page);
+                } else {
+                    alert({title: "", message: 'Falha no serviço, entre em contato com administrador', okButtonText: ''});
+                }
+                this.loader.hide();
+            });
+    }
+
     private redirectLogin(page){
-        var frame = page.parent.parent.parent.parent.frame;
-        frame.navigate({moduleName: "views/login/login-page", clearHistory: true});
+        this.page.frame.page.frame.navigate({moduleName: "views/login/login-page", clearHistory: true});
     }
 
 }

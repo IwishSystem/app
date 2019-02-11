@@ -3,8 +3,12 @@ import { topmost } from "tns-core-modules/ui/frame";
 import * as storage from "nativescript-localstorage";
 import * as cache from "tns-core-modules/application-settings";
 import axios from "axios";
+import {LoadingIndicator} from "nativescript-loading-indicator-new";
 
 export class ClienteDetalheModel extends Observable {
+
+public loader;
+    public loader_options;
 
     private id_cliente: number;
     public cliente: object;
@@ -12,6 +16,27 @@ export class ClienteDetalheModel extends Observable {
 
     constructor(id_cliente: number) {
         super();
+        this.loader = new LoadingIndicator();
+        this.loader_options =  {
+            message: 'Abrindo novo pedido...',
+            progress: 0.65,
+            android: {
+                indeterminate: true,
+                cancelable: false,
+                max: 100,
+                progressNumberFormat: "%1d/%2d",
+                progressPercentFormat: 0.53,
+                progressStyle: 1,
+                secondaryProgress: 1
+            },
+            ios: {
+                details: "Additional detail note!",
+                square: false,
+                margin: 10,
+                dimBackground: true,
+                color: "#4B9ED6"
+            }
+        };
         this.id_cliente = id_cliente;
     }
 
@@ -41,6 +66,7 @@ export class ClienteDetalheModel extends Observable {
     }
 
     public abrirPedido(args){
+        this.loader.show(this.loader_options);
         var page = args.object.page;
         axios.post(cache.getString("api") + "/pedidos", {id_cliente: this.id_cliente, id_representante: cache.getNumber('id_representante')},{auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
             result => {
@@ -50,6 +76,7 @@ export class ClienteDetalheModel extends Observable {
                 } else {
                     this.redirectLogin(page);
                 }
+                this.loader.hide();
             },
             error => {
                 if(error.response.status == 404 || error.response.status == 401){
@@ -57,6 +84,7 @@ export class ClienteDetalheModel extends Observable {
                 } else {
                     alert({title: "", message: "Opps,Ocorreu alguma falha", okButtonText: ""});
                 }
+                this.loader.hide();
             });
     }
 
