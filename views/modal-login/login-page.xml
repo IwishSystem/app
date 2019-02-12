@@ -15,6 +15,7 @@
             <StackLayout class="hr-light"></StackLayout>
         </StackLayout>
     </StackLayout>
-    <Button text="Autenticar" tap="{{ auth }}" class="bg-green white" />
+    <Button text="Autenticar" tap="{{ auth }}" class="bg-green white m-b-20 p-b-20" />
+    <Button text="{{ '0xe994' | getIcon }}" tap="{{ updateUrl }}" class="icon t-20  border-no bg-white green text-center" />
 </StackLayout> 
 </Page>

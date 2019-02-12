@@ -1,11 +1,19 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page t-md" actionBarHidden="true">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md" actionBarHidden="true">
 	<StackLayout class="m-x-15 form">
-		<Label text="Transportadora" class="h1 font-weight-light" />
-		<StackLayout class="input-field">
-			<Label text="Nome da Transportadora" class="label font-weight-bold m-b-5" />
-			<TextField class="input t-md" text="{{ transportadora }}" />
-			<StackLayout class="hr-light"></StackLayout>
+		<DockLayout stretchLastChild="false">
+			<Label text="Transportadora" dock="left" class="h1 font-weight-light" />
+			<Button text="{{ '0xea0a' | getIcon }}" tap="{{ transportadoraNovo }}" class="icon t-24 black  text-right bg-white border-no" dock="right"  />
+		</DockLayout>
+		<StackLayout class="form">
+			<TextField text="{{ transportadora }}" hint="Transportadora" class="input input-rounded t-md" style="padding: 8 20; margin: 0; "  />
 		</StackLayout>
-		<Button class="bg-green white" text="SALVAR" tap="{{ salvar }}" />
+		<ListView class="list-group m-t-10" items="{{ transportadoras_list_view }}" itemTap="{{ itemTap }}">
+			<ListView.itemTemplate>
+				<StackLayout class="border-b p-10">
+					<Label text="{{ descricao }}" class="t-md font-weight-light" />
+					<Label text="{{ codigo }}" class="t-sm font-weight-thin" />
+				</StackLayout>
+			</ListView.itemTemplate>
+		</ListView>
 	</StackLayout>
 </Page>

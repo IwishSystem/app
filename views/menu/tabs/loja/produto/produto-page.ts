@@ -4,6 +4,6 @@ import { ProdutoModel } from "./produto-model";
 
 export function navigatingTo(args: EventData) {
 	let page = <Page>args.object;
-    page.bindingContext = new ProdutoModel(page.navigationContext.id_produto);
+    page.bindingContext = new ProdutoModel(page.navigationContext.id_produto, page);
 }
 

@@ -2,6 +2,7 @@ import { Observable } from "tns-core-modules/data/observable";
 import { topmost } from "tns-core-modules/ui/frame";
 import axios from "axios";
 import * as cache from "tns-core-modules/application-settings";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 
 export class LoginModel extends Observable {
 
@@ -40,5 +41,15 @@ export class LoginModel extends Observable {
             });
     }
 
+    public updateUrl(){
+        let url = cache.getString('url', '');
+        dialogs.prompt("Configurar URL", url).then(r => {
+            console.log(r.result);
+            if(r.result){
+                cache.setString('url', r.text);
+                cache.setString('api', r.text+'/api');
+            }
+        });
+    }
 
 }

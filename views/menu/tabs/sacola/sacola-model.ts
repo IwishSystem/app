@@ -59,7 +59,7 @@ export class SacolaModel extends Observable {
 		}
 	}
 
-	public setPedido(){
+	public atualizarTela(){
 		this.set('pedido', storage.getItem('pedido'));
 		if(this.pedido){
 			var items = new ObservableArray(...this.pedido.pedido_itens);
@@ -95,6 +95,12 @@ export class SacolaModel extends Observable {
 					storage.setItemObject('pedido', result.data.pedido);
 					const viewMode = listView.bindingContext;
 					viewModel.items.splice(viewModel.items.indexOf(args.object.bindingContext), 1);
+
+					/*const pedido_page = this.page.frame.page.getViewById('pedido-page');
+					if(pedido_page){
+						pedido_page.bindingContext.update();
+					}*/
+					//console.log(pedido_page);
 				} else {
 					this.redirectLogin(this.page);
 				}

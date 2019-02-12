@@ -41,8 +41,11 @@ export class ProdutoModel extends Observable {
 
     public multiplo: number;
 
-    constructor(id_produto: number) {
+    public page;
+
+    constructor(id_produto: number, page) {
         super();
+        this.page = page;
         this.loader = new LoadingIndicator();
         this.loader_options =  {
             message: 'Adicionando na Sacola...',
@@ -230,6 +233,7 @@ export class ProdutoModel extends Observable {
                         if(result.status == 200) {
                             topmost().goBack();
                             storage.setItemObject('pedido', result.data.pedido);
+                            //this.atualizarTelaSacola();
                             var tab = <TabView>topmost().currentPage.parent.parent.parent;
                             tab.selectedIndex = 1;
                         } else {
@@ -253,6 +257,7 @@ export class ProdutoModel extends Observable {
                             topmost().goBack();
                             console.log(result.data);
                             storage.setItemObject('pedido', result.data.pedido);
+                            //this.atualizarTelaSacola();
                             var tab = <TabView>topmost().currentPage.parent.parent.parent;
                             tab.selectedIndex = 1;
                         } else {
@@ -273,6 +278,11 @@ export class ProdutoModel extends Observable {
             alert('Pedido não esta em andamento ou não possui o produto em estoque');
         }
     }    
+
+    /*private atualizarTelaSacola(){
+        const page_sacola = this.page.frame.page.getViewById('page_sacola');
+        page_sacola.bindingContext.setPedido();
+    }*/
 
     private redirectLogin(page){
         var frame = page.parent.parent.parent.parent.frame;

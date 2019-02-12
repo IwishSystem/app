@@ -63,6 +63,10 @@ export class PedidoModel extends Observable {
         this.update();
     }
 
+    public atualizarTela(){
+        this.update();
+    }
+
     public update(){
         this.set('pedido', storage.getItem('pedido'));   
 
@@ -81,14 +85,11 @@ export class PedidoModel extends Observable {
         }
 
         // entrega
-        if(this.pedido.entrega != null){
-            if(!this.pedido.entrega) {
-                this.set('entrega', 'INTEGRAL');
-            } else {
-                this.set('entrega', 'PARCIAL');
-            }
+        //        console.log()
+        if(this.pedido.entrega == 0){
+            this.set('entrega', 'INTEGRAL');
         } else {
-            this.set('entrega', 'ENTREGA INDEFINIDA');
+            this.set('entrega', 'PARCIAL');
         }
 
         // comprador
@@ -146,13 +147,16 @@ export class PedidoModel extends Observable {
                 if(pedido_item.estoque_atual_qtd){
                     let desconto = 0;
                     let acrescimo = 0;
-                    if(this.pedido.desconto){
-                        desconto = (this.pedido.desconto/100)*pedido_item.preco;
-                    } else if(pedido_item.desconto){
-                        desconto = (pedido_item.desconto/100)*pedido_item.preco; 
-                    } else if(this.pedido.pedido_pagamento){
-                        desconto = (this.pedido.pedido_pagamento.desconto/100)*pedido_item.preco; 
-                        acrescimo = (this.pedido.pedido_pagamento.acrescimo/100)*pedido_item.preco; 
+
+
+                    if(!pedido_item.produto.desconto_bloquear){
+                        if(pedido_item.desconto){
+                            desconto = (pedido_item.desconto/100)*pedido_item.preco; 
+                        } else if(this.pedido.desconto){
+                            desconto = (this.pedido.desconto/100)*pedido_item.preco;
+                        } else if(this.pedido.pedido_pagamento){
+                            desconto = (this.pedido.pedido_pagamento.desconto/100)*pedido_item.preco; 
+                        }
                     }
 
                     let preco_desconto = pedido_item.preco-desconto;
@@ -179,18 +183,20 @@ export class PedidoModel extends Observable {
                 if(pedido_item.estoque_futuro_qtd){
                     let desconto = 0;
                     let acrescimo = 0;
-                    if(this.pedido.desconto){
-                        desconto = (this.pedido.desconto/100)*pedido_item.preco;
-                    } else if(pedido_item.desconto){
-                        desconto = (pedido_item.desconto/100)*pedido_item.preco; 
-                    } else if(this.pedido.pedido_pagamento){
-                        desconto = (this.pedido.pedido_pagamento.desconto/100)*pedido_item.preco; 
-                        acrescimo = (this.pedido.pedido_pagamento.acrescimo/100)*pedido_item.preco; 
+                    if(!pedido_item.produto.desconto_bloquear){
+                        if(pedido_item.desconto){
+                            desconto = (pedido_item.desconto/100)*pedido_item.preco; 
+                        } else if(this.pedido.desconto){
+                            desconto = (this.pedido.desconto/100)*pedido_item.preco;
+                        }  else if(this.pedido.pedido_pagamento){
+                            desconto = (this.pedido.pedido_pagamento.desconto/100)*pedido_item.preco; 
+                        }
                     }
+
 
                     let preco_desconto = pedido_item.preco-desconto;
                     let ipi = (pedido_item.ipi/100)*preco_desconto;
-                    
+
                     let preco_total =  pedido_item.preco-desconto+ipi+acrescimo;
                     preco_total_minimo+= (pedido_item.preco+ipi+acrescimo)*pedido_item.estoque_futuro_qtd;
 
@@ -335,7 +341,7 @@ export class PedidoModel extends Observable {
     }
     public gotoPageTransportadora(){
         if(this.pedido.id_status == 6) {
-            topmost().navigate("views/menu/tabs/pedidos/pedido/transportadora/transportadora-page");
+            topmost().navigate({moduleName: "views/menu/tabs/pedidos/pedido/transportadora/transportadora-page", backstackVisible: false});
         }
     }
     public gotoPageObservacao(){
@@ -356,6 +362,8 @@ export class PedidoModel extends Observable {
                 }
             });
     }
+
+
 
     private salvarDesconto (args, desconto) {
         var page = args.object.page;
@@ -384,8 +392,8 @@ export class PedidoModel extends Observable {
                 if(this.pedido.pedido_pagamento.condicao_pagamento.valor_minimo > this.preco_total_minimo){
                     alert({title: "", message: "Valor minimo para esta forma de pagamento é R$"+this.pedido.pedido_pagamento.condicao_pagamento.valor_minimo, okButtonText: ""});
                 } else {
-                    this.finalizarPedidoFinal(args);
-                    //topmost().navigate("views/menu/tabs/pedidos/pedido/assinatura/assinatura-page");
+                    //this.finalizarPedidoFinal(args);
+                    topmost().navigate("views/menu/tabs/pedidos/pedido/assinatura/assinatura-page");
                 }
             } else {
                 alert({title: "", message: "Pagmento indefinido", okButtonText: ""});

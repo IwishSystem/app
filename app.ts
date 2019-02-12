@@ -5,8 +5,7 @@ import * as cache from "tns-core-modules/application-settings";
 
 application.on(launchEvent, (args: LaunchEventData) => {
 	cache.setNumber('modal', 0);
-	cache.setString('url', 'http://scancode.com.br/chale');
-	cache.setString('api', 'http://scancode.com.br/chale/api');
+	cache.setNumber('index_menu', 0);
 
 });
 application.on(displayedEvent, (args: ApplicationEventData) => {});

@@ -9,20 +9,7 @@ export class MaisModel extends Observable {
 	}
 
 	public sair(args){
-		
-		const main_frame = args.object.page.parent.page.frame;
-		const pedidos_frame = main_frame.getViewById('pedidos_frame');
-		const tabview = main_frame.getViewById('tabViewContainer');
-		const page_menu = main_frame.getViewById('page_menu');
-		
-		console.log(pedidos_frame);
-		console.log(pedidos_frame);
-
-		pedidos_frame.navigate({moduleName: "views/menu/tabs/pedidos/pedidos-page", clearHistory: true});
-		tabview.selectedIndex = 0;
-
-
-		var bindingContext = page_menu.bindingContext;
+		let bindingContext = args.object.page.frame.page.bindingContext;
         bindingContext.login();	
 	}
 

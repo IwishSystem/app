@@ -1,13 +1,8 @@
 import { EventData } from "tns-core-modules/data/observable";
 import { Page } from "tns-core-modules/ui/page";
-import { SucessoModel } from "./sucesso-model";
+import { TransportadoraNovoModel } from "./transportadora-novo-model";
 
 export function navigatingTo(args: EventData) {
 	let page = <Page>args.object;
-    page.bindingContext = new SucessoModel();
-}
-
-
-export function backEvent(args) {
-	args.cancel = true;
+    page.bindingContext = new TransportadoraNovoModel();
 }

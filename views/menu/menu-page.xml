@@ -1,25 +1,25 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd"  class="page" navigatingTo="navigatingTo" id="page_menu" loaded="loaded" >
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"  class="page" navigatingTo="navigatingTo" id="page_menu" loaded="{{ loaded }}" >
 	<Page.actionBar>
 		<ActionBar class="bg-red">
 			<StackLayout style="width:90%;">
                 <SearchBar text="{{ search }}" class="white" id="search_bar" />
-                <TextView id="scan" text="{{ scan }}" focus="true" loaded="{{ loadedScan }}" style="height:0" />
+                <TextView id="scan" text="{{ scan }}" focus="true" style="height:0" />
             </StackLayout>
         </ActionBar>
     </Page.actionBar>
     <GridLayout class="bg-gray">
         <StackLayout row="0" col="0">
-           <TabView id="tabViewContainer" androidTabsPosition="bottom" selectedIndexChanged="{{ changed }}" tabBackgroundColor="white" selectedTabTextColor="#ee3344">
-          <TabViewItem title="Pedidos" iconSource="{{ pedidos }}">
+           <TabView id="tabViewContainer" androidTabsPosition="bottom" selectedIndexChanged="{{ selectedIndexChanged }}" tabBackgroundColor="white" selectedTabTextColor="#ee3344">
+          <TabViewItem title="Pedidos" iconSource="{{ icon_pedidos }}">
               <Frame defaultPage="{{ default_pedido_page }}" id="pedidos_frame" />
           </TabViewItem>
-          <TabViewItem title="Sacola" iconSource="{{ sacola }}">
+          <TabViewItem title="Sacola" iconSource="{{ icon_sacola }}">
               <Frame defaultPage="views/menu/tabs/sacola/sacola-page" id="sacola_frame" />
           </TabViewItem>
-          <TabViewItem title="Loja" iconSource="{{ loja }}">
+          <TabViewItem title="Loja" iconSource="{{ icon_loja }}">
               <Frame defaultPage="views/menu/tabs/loja/loja-page" id="loja_frame" />
           </TabViewItem>
-          <TabViewItem title="Mais" iconSource="{{ mais }}">
+          <TabViewItem title="Mais" iconSource="{{ icon_mais }}">
               <Frame defaultPage="views/menu/tabs/mais/mais-page" id="mais_frame" />
           </TabViewItem>
       </TabView>
