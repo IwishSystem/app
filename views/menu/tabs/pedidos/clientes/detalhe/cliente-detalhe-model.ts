@@ -42,6 +42,7 @@ public loader;
 
     public loaded(args){
         var page = args.object.page;
+        page.frame.page.bindingContext.focusColetor();
         axios.get(cache.getString('api')+'/clientes/'+this.id_cliente, {auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
             result => {
                 if(result.status == 200) {

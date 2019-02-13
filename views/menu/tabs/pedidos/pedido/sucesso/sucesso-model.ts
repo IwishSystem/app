@@ -25,7 +25,7 @@ export class SucessoModel extends Observable {
         });
 
         this.set('total', total);
-        this.set('desconto', this.total*(100-this.pedido.pedido_pagamento.desconto));
+        //this.set('desconto', this.total*(100-this.pedido.pedido_pagamento.desconto));
 
     }
 

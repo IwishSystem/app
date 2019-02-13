@@ -22,6 +22,7 @@ export class ProdutosModel extends Observable {
     }
 
     public loaded(args){
+        this.page.frame.page.bindingContext.focusColetor();
         var produtos = storage.getItem('produtos') || [];
         if(produtos.length == 0){
             this.axiosProdutos();

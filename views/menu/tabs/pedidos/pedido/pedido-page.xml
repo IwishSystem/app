@@ -1,4 +1,4 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md" actionBarHidden="true" id="pedido_detalhe_page">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md" actionBarHidden="true"  id="pedido_page">
 	<DockLayout >  
 		<StackLayout dock="top" class="p-x-15 bg-gray-light">
 			<StackLayout orientation="horizontal">

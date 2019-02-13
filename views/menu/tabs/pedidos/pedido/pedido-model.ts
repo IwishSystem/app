@@ -1,16 +1,16 @@
-import { Observable, PropertyChangeData } from "tns-core-modules/data/observable";
+import { Observable, PropertyChangeData } from "tns-core-modules/data/observable"; 
 import { topmost, Frame } from "tns-core-modules/ui/frame";
 import * as storage from "nativescript-localstorage";
 import * as cache from "tns-core-modules/application-settings";
 import axios from "axios";
 import { BarcodeScanner } from "nativescript-barcodescanner";
 import { TabView } from "tns-core-modules/ui/tab-view";
-import {LoadingIndicator} from "nativescript-loading-indicator-new";
+import {LoadingIndicator} from "nativescript-loading-indicator-new"; 
 
 export class PedidoModel extends Observable {
 
     public loader;
-    public loader_options;
+    public loader_options;    
 
     public page;
     public pedido;
@@ -60,6 +60,7 @@ export class PedidoModel extends Observable {
     }
 
     public loaded(args){
+        this.page.frame.page.bindingContext.focusColetor();
         this.update();
     }
 
@@ -68,7 +69,7 @@ export class PedidoModel extends Observable {
     }
 
     public update(){
-        this.set('pedido', storage.getItem('pedido'));   
+        this.set('pedido', storage.getItem('pedido')); 
 
         //observacao
         if(this.pedido.observacao == null){
@@ -85,7 +86,6 @@ export class PedidoModel extends Observable {
         }
 
         // entrega
-        //        console.log()
         if(this.pedido.entrega == 0){
             this.set('entrega', 'INTEGRAL');
         } else {
@@ -261,9 +261,8 @@ export class PedidoModel extends Observable {
                 }
             });
         if(produto) {
-
             var tab = <TabView>topmost().currentPage.parent.parent.parent;
-            tab.selectedIndex = 3;
+            tab.selectedIndex = 2;
             var frameLoja = <Frame>topmost().currentPage.parent.parent.parent.parent.getViewById('loja_frame');
             frameLoja.navigate({moduleName: "views/menu/tabs/loja/produto/produto-page", backstackVisible: false, context: { id_produto: produto.id_produto }});
 
@@ -274,7 +273,7 @@ export class PedidoModel extends Observable {
                         var produto = result.data.produto;
                         if(produto){
                             var tab = <TabView>topmost().currentPage.parent.parent.parent;
-                            tab.selectedIndex = 3;
+                            tab.selectedIndex = 2;
                             var frameLoja = <Frame>topmost().currentPage.parent.parent.parent.parent.getViewById('loja_frame');
                             frameLoja.navigate({moduleName: "views/menu/tabs/loja/produto/produto-page", backstackVisible: false, context: { id_produto: produto.id_produto }});
                         } else {
@@ -324,29 +323,29 @@ export class PedidoModel extends Observable {
             if(this.pedido.pedido_pagamento){
                 id_condicao_pagamento = this.pedido.pedido_pagamento.id_condicao_pagamento;
             }
-            topmost().navigate("views/menu/tabs/pedidos/pedido/pagamento/pagamento-page");
+            this.page.frame.navigate({moduleName: "views/menu/tabs/pedidos/pedido/pagamento/pagamento-page", clearHistory: true});
         }
     }
 
     public gotoPageComprador(){
         if(this.pedido.id_status == 6) {
-            topmost().navigate("views/menu/tabs/pedidos/pedido/comprador/comprador-page");
+            this.page.frame.navigate({moduleName: "views/menu/tabs/pedidos/pedido/comprador/comprador-page", clearHistory: true});
         }
     }
 
     public gotoPageEntrega(){
         if(this.pedido.id_status == 6) {
-            topmost().navigate("views/menu/tabs/pedidos/pedido/entrega/entrega-page");
+            this.page.frame.navigate({moduleName: "views/menu/tabs/pedidos/pedido/entrega/entrega-page", clearHistory: true});
         }
     }
     public gotoPageTransportadora(){
         if(this.pedido.id_status == 6) {
-            topmost().navigate({moduleName: "views/menu/tabs/pedidos/pedido/transportadora/transportadora-page", backstackVisible: false});
+            this.page.frame.navigate({moduleName: "views/menu/tabs/pedidos/pedido/transportadora/transportadora-page", clearHistory: true});
         }
     }
     public gotoPageObservacao(){
         if(this.pedido.id_status == 6) {
-            topmost().navigate("views/menu/tabs/pedidos/pedido/observacao/observacao-page");
+            this.page.frame.navigate({moduleName: "views/menu/tabs/pedidos/pedido/observacao/observacao-page", clearHistory: true});
         }
     }
 
@@ -392,8 +391,8 @@ export class PedidoModel extends Observable {
                 if(this.pedido.pedido_pagamento.condicao_pagamento.valor_minimo > this.preco_total_minimo){
                     alert({title: "", message: "Valor minimo para esta forma de pagamento é R$"+this.pedido.pedido_pagamento.condicao_pagamento.valor_minimo, okButtonText: ""});
                 } else {
-                    //this.finalizarPedidoFinal(args);
-                    topmost().navigate("views/menu/tabs/pedidos/pedido/assinatura/assinatura-page");
+                    this.finalizarPedidoFinal(args);
+                    //topmost().navigate("views/menu/tabs/pedidos/pedido/assinatura/assinatura-page");
                 }
             } else {
                 alert({title: "", message: "Pagmento indefinido", okButtonText: ""});
@@ -425,12 +424,11 @@ export class PedidoModel extends Observable {
         axios.patch(cache.getString('api') + '/pedidos/'+this.pedido.id_pedido+'/update',{id_status: 2}, {auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
             (result) => {
                 if(result.status == 200) {
-                    this.page.frame.navigate({moduleName: "views/menu/tabs/pedidos/pedidos-page", clearHistory: true});
+                    this.page.frame.navigate({moduleName: "views/menu/tabs/pedidos/pedido/sucesso/sucesso-page", clearHistory: true});
                 } else {
                     this.redirectLogin(this.page);
                 }
                 this.loader.hide();
-
             },
             (error) => {
                 if(error.response.status == 404 || error.response.status == 401){

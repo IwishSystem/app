@@ -33,7 +33,6 @@ export class MenuModel extends Observable {
         
         this.tabSelecionada(0);
 
-
         if(storage.getItem('pedido')){
             this.default_pedido_page = 'views/menu/tabs/pedidos/pedido/pedido-page';
         } else {
@@ -50,7 +49,7 @@ export class MenuModel extends Observable {
             if (propertyChangeData.propertyName === "search") {
                 this.searchChange();
             }
-        }, this);        
+        }, this);   
     }
 
     public loaded(args){
@@ -82,15 +81,15 @@ export class MenuModel extends Observable {
     }
 
     private atualizarTelaPedidos(){
-        let pedido_detalhe_page = this.page.getViewById('pedido_detalhe_page'); 
-        console.log(pedido_detalhe_page);
+        // tratar atualizar comente se old index estiver dentro dos padroes
+        var pedido_detalhe_page = this.page.getViewById('pedido_page'); 
         if(typeof pedido_detalhe_page !== 'undefined'){
             pedido_detalhe_page.bindingContext.atualizarTela();
-            console.log('diferente de undefined');
         }
     }
 
     private atualizarTelaSacola(){
+        // tratar atualizar comente se old index estiver dentro dos padroes
         let page_sacola = this.page.getViewById('page_sacola');
         page_sacola.bindingContext.atualizarTela();
     }
@@ -100,7 +99,7 @@ export class MenuModel extends Observable {
         setTimeout(function(){ 
             txt.focus();
             txt.dismissSoftInput();
-        }, 100);
+        }, 50);
     }
 
     public changeColetor(){
@@ -117,7 +116,7 @@ export class MenuModel extends Observable {
         var produtos = storage.getItem('produtos') || [];
         var produto = produtos.find(
             (produto) => {
-                if(produto.id_produto == search){
+                if(produto.codigo == search){
                     return true;
                 } else {
                     return false;
@@ -125,7 +124,7 @@ export class MenuModel extends Observable {
             });
         if(produto) {
             var tab = <TabView>this.page.getViewById('tabViewContainer');
-            tab.selectedIndex = 3;
+            tab.selectedIndex = 2;
             var frameLoja = <Frame>this.page.getViewById('loja_frame');
             frameLoja.navigate({moduleName: "views/menu/tabs/loja/produto/produto-page", backstackVisible: false, context: { id_produto: produto.id_produto }});
         } else {
@@ -135,7 +134,7 @@ export class MenuModel extends Observable {
                         var produto = result.data.produto;
                         if(produto){
                             var tab = <TabView>this.page.getViewById('tabViewContainer');
-                            tab.selectedIndex = 3;
+                            tab.selectedIndex = 2;
                             var frameLoja = <Frame>this.page.getViewById('loja_frame');
                             frameLoja.navigate({moduleName: "views/menu/tabs/loja/produto/produto-page", backstackVisible: false, context: { id_produto: produto.id_produto }});
                         } else {
@@ -176,7 +175,6 @@ export class MenuModel extends Observable {
                         count++;
                     }  
                 }
-
                 if(count == 3){
                     break;
                 }
@@ -205,10 +203,7 @@ export class MenuModel extends Observable {
 
 
     private redirectLogin(page){
-        var frame = page.frame;
-        frame.navigate({moduleName: "views/login/login-page", clearHistory: true});
-        this.page
-
+        this.login();
     }
 
     public loadedScan(){
@@ -235,7 +230,7 @@ export class MenuModel extends Observable {
         const loja_frame = <Frame>this.page.getViewById('loja_frame');
 
         const tabViewContainer = <TabView>this.page.getViewById('tabViewContainer');
-       
+
         pedidos_frame.navigate({moduleName: "views/menu/tabs/pedidos/pedidos-page", clearHistory: true});
         loja_frame.navigate({moduleName: "views/menu/tabs/loja/loja-page", clearHistory: true}); 
         

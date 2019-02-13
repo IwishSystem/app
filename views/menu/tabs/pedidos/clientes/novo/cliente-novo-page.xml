@@ -1,4 +1,4 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page t-md" actionBarHidden="true">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="{{ loaded }}" class="page t-md" actionBarHidden="true">
 		<DockLayout stretchLastChild="true" class="m-x-15">
 			<StackLayout dock="top">
 				<Label text="Cliente Novo" class="h1 font-weight-light" />

@@ -21,7 +21,7 @@ export class ObservacaoModel extends Observable {
             result => {
                 if(result.status == 200) {
                     storage.setItemObject('pedido', result.data.pedido);
-                    topmost().goBack();
+                    page.frame.navigate({moduleName: "views/menu/tabs/pedidos/pedido/pedido-page", clearHistory: true});
                 } else {
                     this.redirectLogin(page);
                 }

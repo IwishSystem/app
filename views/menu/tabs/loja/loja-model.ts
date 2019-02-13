@@ -18,6 +18,7 @@ export class LojaModel extends Observable {
     }
 
     public loaded(args){
+        this.page.frame.page.bindingContext.focusColetor();
         var categorias = storage.getItem('categorias') || [];
         if(categorias.length == 0){
             this.axiosCategorias();

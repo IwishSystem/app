@@ -44,10 +44,9 @@ export class LoginModel extends Observable {
     public updateUrl(){
         let url = cache.getString('url', '');
         dialogs.prompt("Configurar URL", url).then(r => {
-            console.log(r.result);
             if(r.result){
-                cache.setString('url', r.text);
-                cache.setString('api', r.text+'/api');
+                cache.setString('url', r.text.trim());
+                cache.setString('api', r.text.trim()+'/api');
             }
         });
     }

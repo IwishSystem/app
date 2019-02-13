@@ -66,6 +66,10 @@ export class ClienteNovoModel extends Observable {
         this.transportadora = "";
     }
 
+    public loaded(args){
+        args.object.frame.page.bindingContext.focusColetor();
+    }
+
     public abrirPedido(args){
         if(this.cpf_cnpj == ""){
             alert('CPF OU CNPJ é obrigatório');
@@ -109,6 +113,7 @@ export class ClienteNovoModel extends Observable {
             result => {
                 console.log(result.data);
                 if(result.status == 200) {
+                    //console.log(result.data);
                     storage.setItemObject('pedido', result.data.pedido);
                     topmost().navigate({moduleName: "views/menu/tabs/pedidos/pedido/pedido-page", clearHistory: true});
                 } else {

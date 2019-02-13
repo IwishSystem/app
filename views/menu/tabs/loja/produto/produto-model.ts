@@ -93,6 +93,7 @@ export class ProdutoModel extends Observable {
     }
 
     public loaded(args){
+        this.page.frame.page.bindingContext.focusColetor();
         var page = args.object.page;
         if(!this.produto){
             console.log(cache.getString("api") +'/produtos/'+this.id_produto);

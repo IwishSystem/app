@@ -16,6 +16,7 @@ export function goHistorico(args: EventData) {
 }
 
 export function loaded(args) {
+	args.object.frame.page.bindingContext.focusColetor();
 	//console.log('LOADED PEDIDOS');
 }
 

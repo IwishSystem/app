@@ -10,6 +10,7 @@ import { topmost } from "tns-core-modules/ui/frame";
 export function navigatingTo(args: EventData) {
 	let page = <Page>args.object;
 	page.bindingContext = new PedidoModel(page);
+	
 }
 
 export function backEvent(args) {
@@ -21,7 +22,6 @@ export function backEvent(args) {
 			(result) => {
 				switch (result) {
 					case 'Cancelar Pedido': 
-					console.log('cacnelar');
 					axios.patch(cache.getString("api") + "/pedidos/"+pedido.id_pedido+"/update",{id_status: 3},{auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
 						(result) => {
 							if(result.status == 200) {
