@@ -29,7 +29,7 @@
         <ListView.itemTemplate>
             <StackLayout class="border-b p-10">
                 <Label text="{{ descricao }}" class="t-md font-weight-thin" />
-                <Label text="{{ codigo }}" class="t-sm font-weight-normal" /> 
+                <Label text="{{ codigo_2 }}" class="t-sm font-weight-normal" /> 
             </StackLayout>
         </ListView.itemTemplate>
     </ListView>

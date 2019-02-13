@@ -114,15 +114,17 @@ export class ProdutoModel extends Observable {
                             });
 
                         this.set('produtos_variacoes', produtos_variacoes_list);
-                        this.set('preco', this.produto.preco);
-                        this.set('preco_desconto', this.produto.preco);
+                        //this.set('preco', this.produto.preco);
+                        //this.set('preco_desconto', this.produto.preco);
                         this.set('multiplo', this.produto.multiplo);
 
 
                         var total_estoque =  this.produto.produto_estoque.disponivel_atual+this.produto.produto_estoque.disponivel_futuro;
 
                         this.set('quantidade_minima', this.produto.qtd_min);
-                        if(this.quantidade_minima < this.multiplo) this.set('quantidade_minima', this.multiplo);
+                        if(this.quantidade_minima < this.multiplo){ 
+                            this.set('quantidade_minima', this.multiplo);
+                        }
                         
                         this.set('quantidade_inicio', this.quantidade_minima);
                         this.set('quantidade', this.quantidade_inicio);
@@ -229,7 +231,7 @@ export class ProdutoModel extends Observable {
         if(this.pedido.id_status == 6 && total_estoque >= this.quantidade_inicio){
             if(this.pedido_item){
                 this.loader.show(this.loader_options);
-                axios.patch(cache.getString("api")+'/pedidos/'+this.pedido.id_pedido+'/pedido_item/'+this.pedido_item.id, {quantidade: this.quantidade, observacao: this.observacao, desconto: this.desconto}, {auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
+                axios.patch(cache.getString("api")+'/pedidos/'+this.pedido.id_pedido+'/pedido_item/'+this.pedido_item.id, {quantidade: this.quantidade, observacao: this.observacao, desconto: this.desconto, preco: this.preco_desconto}, {auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
                     (result) => {
                         if(result.status == 200) {
                             topmost().goBack();
@@ -252,7 +254,7 @@ export class ProdutoModel extends Observable {
                     });
             } else {
                 this.loader.show(this.loader_options);
-                axios.post(cache.getString("api")+'/pedidos/'+this.pedido.id_pedido+'/pedido_item', {id_produto: this.produto.id_produto, preco: this.produto.preco, quantidade: this.quantidade, observacao: this.observacao, desconto: this.desconto}, {auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
+                axios.post(cache.getString("api")+'/pedidos/'+this.pedido.id_pedido+'/pedido_item', {id_produto: this.produto.id_produto, preco: this.preco_desconto, quantidade: this.quantidade, observacao: this.observacao, desconto: this.desconto}, {auth: {username: cache.getString('login'), password: cache.getString('senha')}}).then(
                     (result) => {
                         if(result.status == 200) {
                             topmost().goBack();
@@ -280,10 +282,6 @@ export class ProdutoModel extends Observable {
         }
     }    
 
-    /*private atualizarTelaSacola(){
-        const page_sacola = this.page.frame.page.getViewById('page_sacola');
-        page_sacola.bindingContext.setPedido();
-    }*/
 
     private redirectLogin(page){
         page.frame.pega.bindingContext.login();
@@ -319,11 +317,19 @@ export class ProdutoModel extends Observable {
                 quantidade_min = preco_promocional.quantidade;
             }
         });
-        this.set('preco', preco);
+        this.set('preco', this.produto.preco);
 
 
         let preco_desconto = preco*((100-this.desconto)/100);
         this.set('preco_desconto', preco_desconto);
+
+
+        if(this.pedido){
+            if(this.pedido.cliente.varejo){
+                this.set('preco', this.produto.preco);
+                this.set('preco_desconto', this.produto.preco_varejo);
+            }
+        }
     }
 
     public trocarCor(args){

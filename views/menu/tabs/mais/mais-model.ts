@@ -4,8 +4,11 @@ import * as storage from "nativescript-localstorage";
 
 export class MaisModel extends Observable {
 
+	public login: string;
+
 	constructor() {
 		super(); 
+		this.login = cache.getString('login', 'Sem Representante');
 	}
 
 	public sair(args){

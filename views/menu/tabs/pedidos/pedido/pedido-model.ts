@@ -5,7 +5,7 @@ import * as cache from "tns-core-modules/application-settings";
 import axios from "axios";
 import { BarcodeScanner } from "nativescript-barcodescanner";
 import { TabView } from "tns-core-modules/ui/tab-view";
-import {LoadingIndicator} from "nativescript-loading-indicator-new"; 
+import {LoadingIndicator} from "nativescript-loading-indicator-new";  
 
 export class PedidoModel extends Observable {
 
@@ -141,9 +141,11 @@ export class PedidoModel extends Observable {
         this.set('quantidade_total', quantidade);
 
         // preco total atual
+        console.log('BABA');
         if(this.pedido.pedido_itens.length > 0) {
             var sum = 0;
             this.pedido.pedido_itens.forEach(function(pedido_item){
+                console.log('item: '+pedido_item.id);
                 if(pedido_item.estoque_atual_qtd){
                     let desconto = 0;
                     let acrescimo = 0;
@@ -151,13 +153,17 @@ export class PedidoModel extends Observable {
 
                     if(!pedido_item.produto.desconto_bloquear){
                         if(pedido_item.desconto){
+                            console.log('A');
                             desconto = (pedido_item.desconto/100)*pedido_item.preco; 
                         } else if(this.pedido.desconto){
+                            console.log('B');
                             desconto = (this.pedido.desconto/100)*pedido_item.preco;
                         } else if(this.pedido.pedido_pagamento){
+                            console.log('C');
                             desconto = (this.pedido.pedido_pagamento.desconto/100)*pedido_item.preco; 
                         }
                     }
+                    console.log(desconto);
 
                     let preco_desconto = pedido_item.preco-desconto;
                     let ipi = (pedido_item.ipi/100)*preco_desconto;

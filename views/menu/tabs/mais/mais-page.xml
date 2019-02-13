@@ -1,5 +1,12 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo"  class="page t-md" id="page_mais" actionBarHidden="true">
-	<StackLayout>
-		<Button text="Sair" class="bg-red white" tap="{{ sair }}" />
-	</StackLayout>
+	<DockLayout>
+		<Label text="V.1.0.0" dock="bottom" class="m-x-20 m-t-10 m-b-20 t-sm" />
+		<StackLayout dock="top" class="m-x-20 m-t-10 m-b-20">
+			<StackLayout orientation="horizontal" class="t-md font-weight-litgh">
+				<Label text="Representante: " class="t-md font-weight-bold" />
+				<Label text="{{ login }}"/>
+			</StackLayout>
+			<Button text="Sair" class="bg-red white" tap="{{ sair }}" />
+		</StackLayout>
+	</DockLayout>
 </Page>
