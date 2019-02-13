@@ -37,8 +37,7 @@ export class TransportadoraNovoModel extends Observable {
     }
 
     private redirectLogin(page){
-        var frame = page.parent.parent.parent.parent.frame;
-        frame.navigate({moduleName: "views/login/login-page", clearHistory: true});
+        page.frame.pega.bindingContext.login();
     }
 
 }

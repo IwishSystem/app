@@ -441,7 +441,7 @@ export class PedidoModel extends Observable {
     }
 
     private redirectLogin(page){
-        this.page.frame.page.frame.navigate({moduleName: "views/login/login-page", clearHistory: true});
+        page.frame.pega.bindingContext.login();
     }
 
 }
