@@ -7,6 +7,14 @@ application.on(launchEvent, (args: LaunchEventData) => {
 	cache.setNumber('modal', 0);
 	cache.setNumber('index_menu', 0);
 
+	//let url = cache.getString('url', '');
+	//if(url == ''){
+	//	cache.setString('url', 'http://192.168.0.100');
+	//	cache.setString('api', 'http://192.168.0.100/api');
+	//}
+
+
+
 });
 application.on(displayedEvent, (args: ApplicationEventData) => {});
 application.on(suspendEvent, (args: ApplicationEventData) => {});

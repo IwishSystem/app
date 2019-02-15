@@ -153,23 +153,24 @@ export class PedidoModel extends Observable {
 
                     if(!pedido_item.produto.desconto_bloquear){
                         if(pedido_item.desconto){
-                            console.log('A');
                             desconto = (pedido_item.desconto/100)*pedido_item.preco; 
                         } else if(this.pedido.desconto){
-                            console.log('B');
                             desconto = (this.pedido.desconto/100)*pedido_item.preco;
                         } else if(this.pedido.pedido_pagamento){
-                            console.log('C');
                             desconto = (this.pedido.pedido_pagamento.desconto/100)*pedido_item.preco; 
                         }
                     }
-                    console.log(desconto);
+
+                    if(this.pedido.pedido_pagamento){
+                        acrescimo = (this.pedido.pedido_pagamento.acrescimo/100)*pedido_item.preco; 
+                    }
 
                     let preco_desconto = pedido_item.preco-desconto;
-                    let ipi = (pedido_item.ipi/100)*preco_desconto;
+                    let preco_desconto_acrescimo = preco_desconto+acrescimo;
+                    let ipi = (pedido_item.ipi/100)*preco_desconto_acrescimo;
                     
-
                     let preco_total =  pedido_item.preco-desconto+ipi+acrescimo;
+
 
                     preco_total_minimo+= (pedido_item.preco+ipi+acrescimo)*pedido_item.estoque_atual_qtd;
 
@@ -199,9 +200,13 @@ export class PedidoModel extends Observable {
                         }
                     }
 
+                    if(this.pedido.pedido_pagamento){
+                        acrescimo = (this.pedido.pedido_pagamento.acrescimo/100)*pedido_item.preco; 
+                    }
 
                     let preco_desconto = pedido_item.preco-desconto;
-                    let ipi = (pedido_item.ipi/100)*preco_desconto;
+                    let preco_desconto_acrescimo = preco_desconto+acrescimo;
+                    let ipi = (pedido_item.ipi/100)*preco_desconto_acrescimo;
 
                     let preco_total =  pedido_item.preco-desconto+ipi+acrescimo;
                     preco_total_minimo+= (pedido_item.preco+ipi+acrescimo)*pedido_item.estoque_futuro_qtd;
