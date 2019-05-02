@@ -141,7 +141,6 @@ export class PedidoModel extends Observable {
         this.set('quantidade_total', quantidade);
 
         // preco total atual
-        console.log('BABA');
         if(this.pedido.pedido_itens.length > 0) {
             var sum = 0;
             this.pedido.pedido_itens.forEach(function(pedido_item){

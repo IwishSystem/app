@@ -11,6 +11,10 @@ export class MaisModel extends Observable {
 		this.login = cache.getString('login', 'Sem Representante');
 	}
 
+	public loaded(args){
+		this.set('login', cache.getString('login', 'Sem Representante'));	
+	}
+
 	public sair(args){
 		let bindingContext = args.object.page.frame.page.bindingContext;
         bindingContext.login();	
